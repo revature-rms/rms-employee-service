@@ -1,6 +1,6 @@
 package com.revature.rms.employee.exceptions;
 
-public class ResourceNotFoundException extends QuizzardException {
+public class ResourceNotFoundException extends RuntimeException {
 
     public ResourceNotFoundException() {
         super("No resource found with provided search criteria!");
