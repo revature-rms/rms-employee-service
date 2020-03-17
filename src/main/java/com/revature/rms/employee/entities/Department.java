@@ -2,7 +2,8 @@ package com.revature.rms.employee.entities;
 
 public enum Department {
 
-    TRAINING("TRAINING"), STAGING("STAGING"), QC("QC"), RETENTION("RETENTION"), HR("HR");
+    TRAINING("TRAINING"), STAGING("STAGING"), QC("QC"), RETENTION("RETENTION"), HR("HR"),
+    RECRUITMENT("RECRUITMENT"), DELIVERY("DELIVERY");
 
     private String departmentName;
 
