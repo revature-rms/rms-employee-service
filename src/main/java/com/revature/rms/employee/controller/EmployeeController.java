@@ -2,7 +2,6 @@ package com.revature.rms.employee.controller;
 
 import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Employee;
-import com.revature.rms.employee.repositories.ResourceMetadataRepository;
 import com.revature.rms.employee.services.EmployeeService;
 import com.revature.rms.employee.services.ResourceMetadataService;
 import org.springframework.beans.factory.annotation.Autowired;

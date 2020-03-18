@@ -1,6 +1,5 @@
 package com.revature.rms.employee.entities;
 
-import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
 import java.util.Objects;

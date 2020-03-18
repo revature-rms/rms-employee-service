@@ -1,6 +1,8 @@
 package com.revature.rms.employee.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ public class Employee {
     @Id
     @Column
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+
     private int id;
 
     @Column(nullable=false)
@@ -36,6 +39,7 @@ public class Employee {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ResourceMetadata resourceMetadata;
 
 

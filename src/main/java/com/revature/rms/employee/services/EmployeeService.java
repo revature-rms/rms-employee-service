@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -22,11 +21,6 @@ public class EmployeeService {
         super();
         this.employeeRepo = repo;
     }
-
-    public EmployeeService() {
-
-    }
-
 
     @Transactional(readOnly = true)
     public Employee getEmployeeById(int id) throws ResourceNotFoundException{
@@ -62,11 +56,7 @@ public class EmployeeService {
     {
 
         List<T> list = new ArrayList<>();
-
-        // Add each element of iterator to the List
         iterable.forEach(list::add);
-
-        // Return the List
         return list;
     }
 
