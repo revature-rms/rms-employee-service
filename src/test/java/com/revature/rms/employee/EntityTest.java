@@ -31,16 +31,11 @@ public class EntityTest {
 
     @Test
     public void testEmp() {
-        // given
         Employee check = new Employee("test1","test1","test1","test1");
         entityManager.persist(check);
         entityManager.flush();
 
-        // when
         Employee found = employeeRepository.findByFirstName(check.getFirstName());
-
-        // then
-
 
         assertThat(found.getFirstName())
                 .isEqualTo(check.getFirstName());
@@ -48,7 +43,6 @@ public class EntityTest {
 
     @Test
     public void testRes() {
-        // given
         LocalDate today = LocalDate.now();
         String createdDate = today.toString();
         String lastModifiedDate = today.toString();
@@ -56,12 +50,7 @@ public class EntityTest {
         entityManager.persist(check);
         entityManager.flush();
 
-        // when
         ResourceMetadata found = resourceMetadataRepository.findByResourceCreator(1);
-
-        // then
-
-
         assertThat(found.getResourceCreator())
                 .isEqualTo(check.getResourceCreator());
     }
