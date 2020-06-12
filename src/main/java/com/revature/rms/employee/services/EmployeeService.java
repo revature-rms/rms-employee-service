@@ -1,6 +1,5 @@
 package com.revature.rms.employee.services;
 
-
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
@@ -14,7 +13,7 @@ import java.util.List;
 @Service
 public class EmployeeService {
 
-    private EmployeeRepository employeeRepo;
+    private final EmployeeRepository employeeRepo;
 
     @Autowired
     public EmployeeService(EmployeeRepository repo) {
@@ -22,45 +21,50 @@ public class EmployeeService {
         this.employeeRepo = repo;
     }
 
+    /**
+     * getAll method: returns a list of all the employee objects in the database.
+     * @return a list of all the employees
+     * @throws ResourceNotFoundException when no employees are found
+     */
     @Transactional(readOnly = true)
-    public Employee getEmployeeById(int id) throws ResourceNotFoundException{
-        return employeeRepo.findById(id);
-    }
-
-    @Transactional
-    public Employee update(Employee updatedEmp) {
-        return employeeRepo.save(updatedEmp);
-    }
-
-
-    @Transactional
-    public Employee addEmployee(Employee newEmployee) {
-        return employeeRepo.save(newEmployee);
-    }
-
-    @Transactional(readOnly = true)
-    public Employee findByFirstname(String name) throws ResourceNotFoundException{
-        return employeeRepo.findByFirstName(name);
-
-    }
-
-    @Transactional(readOnly = true)
-    public List<Employee> getall() throws ResourceNotFoundException{
+    public List<Employee> getAll() throws ResourceNotFoundException{
         Iterable<Employee> e = employeeRepo.findAll();
-        List<Employee> list = getListFromIterator(e);
-        return list;
-
-
+        return getListFromIterator(e);
     }
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {
-
         List<T> list = new ArrayList<>();
         iterable.forEach(list::add);
         return list;
     }
 
+    /**
+     * findByFirstName method: returns an employee object when the firstName String matches a record in the database.
+     * @return an employee with matching firstName
+     * @throws ResourceNotFoundException when an employee is not found
+     */
+    @Transactional(readOnly = true)
+    public Employee findByFirstName(String firstName) throws ResourceNotFoundException{
+        return employeeRepo.findByFirstName(firstName);
+    }
 
+    /**
+     * getById method: returns an employee object when the id int matches a record in the database.
+     * @return an employee with matching id
+     * @throws ResourceNotFoundException when an employee is not found
+     */
+    @Transactional(readOnly = true)
+    public Employee getById(int id) throws ResourceNotFoundException{
+        return employeeRepo.findById(id);
+    }
 
+    @Transactional
+    public Employee add(Employee newEmployee) {
+        return employeeRepo.save(newEmployee);
+    }
 
+    @Transactional
+    public Employee update(Employee updatedEmployee) {
+        return employeeRepo.save(updatedEmployee);
+    }
 }
