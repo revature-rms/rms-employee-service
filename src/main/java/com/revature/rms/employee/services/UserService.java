@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
-    private UserRepository userRepo;
+    private final UserRepository userRepo;
 
     @Autowired
     public UserService(UserRepository repo) {
@@ -18,6 +18,10 @@ public class UserService {
         this.userRepo = repo;
     }
 
+    /**
+     * getAllUsers method: returns a list of all the user objects in the database.
+     * @return a list of all the users
+     */
     @Transactional(readOnly=true)
     public Iterable<AppUser> getAllUsers() {
         return userRepo.findAll();
@@ -30,8 +34,7 @@ public class UserService {
 
     @Transactional(readOnly=true)
     public AppUser authenticate(String username, String password) {
-        AppUser retrievedUser = userRepo.findAppUserByUsernameAndPassword(username, password);
-        return retrievedUser;
+        return userRepo.findAppUserByUsernameAndPassword(username, password);
     }
 
     @Transactional
