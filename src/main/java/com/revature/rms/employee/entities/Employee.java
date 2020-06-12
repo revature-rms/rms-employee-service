@@ -1,23 +1,16 @@
 package com.revature.rms.employee.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.io.Serializable;
 
-
 @Entity
-public class Employee {
+public class Employee implements Serializable{
 
     @Id
     @Column
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-
     private int id;
 
     @Column(nullable=false)
@@ -36,13 +29,10 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private Department department;
 
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ResourceMetadata resourceMetadata;
-
-
 
 
     public int getId() {
@@ -149,7 +139,6 @@ public class Employee {
         this.department = department;
         this.resourceMetadata = resourceMetadata;
     }
-
 
 
     @Override
