@@ -1,6 +1,5 @@
 package com.revature.rms.employee.entities;
 
-
 import javax.persistence.*;
 import java.util.Objects;
 
