@@ -1,6 +1,5 @@
 package com.revature.rms.employee.services;
 
-
 import com.revature.rms.employee.entities.ResourceMetadata;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.exceptions.ResourcePersistenceException;
@@ -14,7 +13,7 @@ import java.time.LocalDate;
 @Service
 public class ResourceMetadataService {
 
-    private ResourceMetadataRepository resourceRepo;
+    private final ResourceMetadataRepository resourceRepo;
 
     @Autowired
     public ResourceMetadataService(ResourceMetadataRepository repo) {
@@ -49,5 +48,4 @@ public class ResourceMetadataService {
     public ResourceMetadata findbyCreator(int id)throws ResourceNotFoundException {
         return resourceRepo.findByResourceCreator(id);
     }
-
 }
