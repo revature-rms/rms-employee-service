@@ -5,7 +5,7 @@ public enum Department {
     TRAINING("TRAINING"), STAGING("STAGING"), QC("QC"), RETENTION("RETENTION"), HR("HR"),
     RECRUITMENT("RECRUITMENT"), DELIVERY("DELIVERY");
 
-    private String departmentName;
+    private final String departmentName;
 
     Department(String name) {
         this.departmentName = name;
