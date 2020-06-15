@@ -32,9 +32,9 @@ public class ServiceTest {
 
         Employee check = new Employee("test1","test1","test1","test1");
 
-        employeeService.addEmployee(check);
+        employeeService.add(check);
 
-        Employee found = employeeService.findByFirstname(name);
+        Employee found = employeeService.findByFirstName(name);
 
         assertThat(found.getFirstName())
                 .isEqualTo(name);
