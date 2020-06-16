@@ -33,7 +33,7 @@ public class EmployeeService {
     }
 
     /**
-     * Update Method: The employee object is inputted and changes are saved.
+     * update method: The employee object is inputted and changes are saved.
      * The modified object is returned.
      * @param updatedEmp newly updated employee object
      * @return updated/modified employee object
@@ -44,13 +44,13 @@ public class EmployeeService {
     }
 
     /**
-     * addEmployee Method: Takes in a employee object as the input. The input employee
+     * addEmployee method: Takes in a employee object as the input. The input employee
      * object is tested to ensure that it is not null. If the employee object
      * is null then it will throw a ResourceNotFoundException.
      * Once the employee object passes the test it is then added or persisted
      * to the database.
      * @param newEmployee newly persisted employee object
-     * @return The newly added employee object
+     * @return the newly added employee object
      */
     @Transactional
     public Employee addEmployee(Employee newEmployee) {
