@@ -9,7 +9,21 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeRepository extends CrudRepository<Employee, Integer>{
+
+    /**
+     * findById: The id parameter is passed as the input.
+     * An employee is returned when the input id matches a database record.
+     * @param id employee id int
+     * @return employee with matching id int
+     */
     Employee findById(int id);
+
+    /**
+     * findByFirstName: The firstName parameter is passed as the input.
+     * An employee is returned when the input firstName matches a database record.
+     * @param fname employee firstName String
+     * @return employee with matching firstName String
+     */
     Employee findByFirstName(String fname);
 
 }

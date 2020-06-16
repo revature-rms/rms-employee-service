@@ -18,6 +18,10 @@ public class UserService {
         this.userRepo = repo;
     }
 
+    /**
+     * getAllUsers method: returns a list of all the user objects in the database.
+     * @return a list of all the users
+     */
     @Transactional(readOnly=true)
     public Iterable<AppUser> getAllUsers() {
         return userRepo.findAll();
