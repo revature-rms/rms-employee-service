@@ -22,7 +22,8 @@ public class EmployeeService {
     }
 
     /**
-     * getEmployeeById method: returns an employee object when the id int matches a record in the database.
+     * getEmployeeById method: Returns an employee object when the id int matches a record in the database.
+     * @param id employeeId int value
      * @return an employee with matching id
      * @throws ResourceNotFoundException when an employee is not found
      */
@@ -34,7 +35,7 @@ public class EmployeeService {
     /**
      * Update Method: The employee object is inputted and changes are saved.
      * The modified object is returned.
-     * @param updatedEmp
+     * @param updatedEmp newly updated employee object
      * @return updated/modified employee object
      */
     @Transactional
@@ -48,7 +49,7 @@ public class EmployeeService {
      * is null then it will throw a ResourceNotFoundException.
      * Once the employee object passes the test it is then added or persisted
      * to the database.
-     * @param newEmployee
+     * @param newEmployee newly persisted employee object
      * @return The newly added employee object
      */
     @Transactional
@@ -60,7 +61,8 @@ public class EmployeeService {
     }
 
     /**
-     * findByFirstName method: returns an employee object when the firstName String matches a record in the database.
+     * findByFirstName method: Returns an employee object when the firstName String matches a record in the database.
+     * @param name employeeFirstName String value
      * @return an employee with matching firstName
      * @throws ResourceNotFoundException when an employee is not found
      */
@@ -71,7 +73,7 @@ public class EmployeeService {
     }
 
     /**
-     * getall method: returns a list of all the employee objects in the database.
+     * getall method: Returns a list of all the employee objects in the database.
      * @return a list of all the employees
      * @throws ResourceNotFoundException when no employees are found
      */
@@ -83,7 +85,6 @@ public class EmployeeService {
     }
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {
-
         List<T> list = new ArrayList<>();
         iterable.forEach(list::add);
         return list;
