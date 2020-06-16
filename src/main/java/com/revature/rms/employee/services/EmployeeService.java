@@ -58,11 +58,26 @@ public class EmployeeService {
         return employeeRepo.findById(id);
     }
 
+    /**
+     * Add method: Takes in a employee object as the input. The input employee
+     * object is tested to ensure that it is not null. If the employee object
+     * is null then it will throw a ResourceNotFoundException.
+     * Once the employee object passes the test it is then saved or persisted
+     * to the database.
+     * @param newEmployee
+     * @return the newly added employee object
+     */
     @Transactional
     public Employee add(Employee newEmployee) {
         return employeeRepo.save(newEmployee);
     }
 
+    /**
+     * Update Method: The employee object is inputted and changes are saved.
+     * The modified object is returned.
+     * @param updatedEmployee
+     * @return updated/modified employee object
+     */
     @Transactional
     public Employee update(Employee updatedEmployee) {
         return employeeRepo.save(updatedEmployee);
