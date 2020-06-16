@@ -17,22 +17,12 @@ public class ResourceController {
         this.service = service;
     }
 
-    /**
-     *
-     * @param data
-     * @return
-     */
     @PostMapping(value = "/adddata", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResourceMetadata saveData (@RequestBody ResourceMetadata data)
     {
         return service.save(data);
     }
 
-    /**
-     *
-     * @param data
-     * @return
-     */
     @PostMapping(value = "/updatemodifier", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResourceMetadata updateModifier(@RequestBody ResourceMetadata data){
         ResourceMetadata meta = service.findById(data.getResourceId());
@@ -41,11 +31,6 @@ public class ResourceController {
         return service.update(meta);
     }
 
-    /**
-     *
-     * @param data
-     * @return
-     */
     @PostMapping(value = "/updateall", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResourceMetadata updateAll(@RequestBody ResourceMetadata data){
         ResourceMetadata meta = service.findById(data.getResourceId());
@@ -55,11 +40,6 @@ public class ResourceController {
         return service.update(meta);
     }
 
-    /**
-     *
-     * @param data
-     * @return
-     */
     @PostMapping(value = "/findbyid", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResourceMetadata findById(@RequestBody ResourceMetadata data){
         int id = data.getResourceId();
@@ -67,11 +47,6 @@ public class ResourceController {
         return service.findById(id);
     }
 
-    /**
-     *
-     * @param data
-     * @return
-     */
     @PostMapping(value = "/findbycreator", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResourceMetadata findByCreator(@RequestBody ResourceMetadata data){
         int id = data.getResourceCreator();
@@ -79,10 +54,6 @@ public class ResourceController {
         return service.findbyCreator(id);
     }
 
-    /**
-     *
-     * @return
-     */
     @GetMapping("/test")
     public @ResponseBody String test() {
         return "resourceController loaded";
