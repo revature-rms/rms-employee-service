@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/resource")
 public class ResourceController {
 
-
     private ResourceMetadataService service;
 
     @Autowired
@@ -18,20 +17,17 @@ public class ResourceController {
         this.service = service;
     }
 
-
-
     @PostMapping(value = "/adddata", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResourceMetadata saveData (@RequestBody ResourceMetadata data)
     {
-
         return service.save(data);
-
     }
 
     @PostMapping(value = "/updatemodifier", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResourceMetadata updateModifier(@RequestBody ResourceMetadata data){
         ResourceMetadata meta = service.findById(data.getResourceId());
         meta.setLastModifier(data.getLastModifier());
+
         return service.update(meta);
     }
 
@@ -40,20 +36,21 @@ public class ResourceController {
         ResourceMetadata meta = service.findById(data.getResourceId());
         meta.setLastModifier(data.getLastModifier());
         meta.setResourceOwner(data.getResourceOwner());
+
         return service.update(meta);
     }
 
     @PostMapping(value = "/findbyid", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResourceMetadata findById(@RequestBody ResourceMetadata data){
-
         int id = data.getResourceId();
+
         return service.findById(id);
     }
 
     @PostMapping(value = "/findbycreator", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResourceMetadata findByCreator(@RequestBody ResourceMetadata data){
-
         int id = data.getResourceCreator();
+
         return service.findbyCreator(id);
     }
 

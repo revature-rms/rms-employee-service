@@ -49,7 +49,6 @@ public class EmployeeController {
         emp.setEmail(employee.getEmail());
         emp.setTitle(employee.getTitle());
         emp.setDepartment(employee.getDepartment());
-
         emp.setResourceMetadata(service.findById(employee.getResourceId()));
 
         return employeeService.addEmployee(emp);
@@ -82,12 +81,10 @@ public class EmployeeController {
         emp.setEmail(employee.getEmail());
         emp.setTitle(employee.getTitle());
         emp.setDepartment(employee.getDepartment());
-
         emp.setResourceMetadata(service.findById(employee.getResourceId()));
 
         return employeeService.addEmployee(emp);
     }
-
 
     @GetMapping (value = "/getallbyid", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllById (@RequestParam List<Integer> ids){
@@ -104,6 +101,7 @@ public class EmployeeController {
 
         return employeeService.getEmployeeById(id);
     }
+
     @PostMapping(value = "/getbyfirstname", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getByfirstname(@RequestBody @Valid EmployeeCreds employee) {
         String fname = employee.getFirstName();
@@ -120,5 +118,4 @@ public class EmployeeController {
     public @ResponseBody String test() {
         return "employeeController loaded";
     }
-
 }
