@@ -60,6 +60,7 @@ public class ResourceMetadata {
         this.lastModifier = lastModifier;
         this.lastModifiedDateTime = LocalDateTime.now().toString();
         this.resourceOwner = resourceOwner;
+        this.isActive = true;
     }
 
     public ResourceMetadata(int lastModifier, int resourceOwner) {
