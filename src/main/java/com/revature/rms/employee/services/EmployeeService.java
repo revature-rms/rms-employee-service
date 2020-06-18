@@ -1,6 +1,7 @@
 package com.revature.rms.employee.services;
 
 import com.revature.rms.employee.entities.Employee;
+import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
 
-    private EmployeeRepository employeeRepo;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     public EmployeeService(EmployeeRepository repo) {
         super();
-        this.employeeRepo = repo;
+        this.employeeRepository = repo;
     }
 
     /**
@@ -29,7 +31,7 @@ public class EmployeeService {
      */
     @Transactional(readOnly = true)
     public Employee getEmployeeById(int id) throws ResourceNotFoundException{
-        return employeeRepo.findById(id);
+        return employeeRepository.findById(id);
     }
 
     /**
@@ -40,7 +42,7 @@ public class EmployeeService {
      */
     @Transactional
     public Employee update(Employee updatedEmp) {
-        return employeeRepo.save(updatedEmp);
+        return employeeRepository.save(updatedEmp);
     }
 
     /**
@@ -57,7 +59,7 @@ public class EmployeeService {
         if(newEmployee == null){
             throw new ResourceNotFoundException();
         }
-        return employeeRepo.save(newEmployee);
+        return employeeRepository.save(newEmployee);
     }
 
     /**
@@ -68,7 +70,7 @@ public class EmployeeService {
      */
     @Transactional(readOnly = true)
     public Employee findByFirstname(String name) throws ResourceNotFoundException{
-        return employeeRepo.findByFirstName(name);
+        return employeeRepository.findByFirstName(name);
 
     }
 
@@ -79,7 +81,7 @@ public class EmployeeService {
      */
     @Transactional(readOnly = true)
     public List<Employee> getall() throws ResourceNotFoundException{
-        Iterable<Employee> e = employeeRepo.findAll();
+        Iterable<Employee> e = employeeRepository.findAll();
         List<Employee> list = getListFromIterator(e);
         return list;
     }
@@ -88,5 +90,19 @@ public class EmployeeService {
         List<T> list = new ArrayList<>();
         iterable.forEach(list::add);
         return list;
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @Transactional
+    public Employee delete(int id) {
+        if (id <= 0) {
+            throw new InvalidRequestException();
+        }
+        Employee deleteEmployee = employeeRepository.findById(id);
+        return update(deleteEmployee);
     }
 }
