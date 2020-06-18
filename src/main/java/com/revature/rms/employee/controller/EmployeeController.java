@@ -27,11 +27,21 @@ public class EmployeeController {
         this.service =service;
     }
 
+    /**
+     * getEmployeeById method: Returns an employee object when the id int matches a record in the database.
+     * @param id employeeId int value
+     * @return an employee with matching id
+     */
     @GetMapping(value="/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getEmployeeById(@PathVariable @RequestBody int id) {
         return employeeService.getEmployeeById(id);
     }
 
+    /**
+     * getEmployeesById method: Returns a set of employee objects when the ids- ints match records in the database.
+     * @param ids employeeId int values
+     * @return a set of employees with matching ids
+     */
     @GetMapping(value="/group/{ids}",produces = MediaType.APPLICATION_JSON_VALUE)
     public Set<Employee> getEmployeesById(@PathVariable @RequestBody Set<Integer> ids){
         Set<Employee> employees = new HashSet<>();
@@ -41,6 +51,11 @@ public class EmployeeController {
         return employees;
     }
 
+    /**
+     * addNewEmployeeWithResource method: Takes in a employee object as the input, along with a resourceId.
+     * @param employee employeeCreds DTO object
+     * @return the newly added employee object
+     */
     @PostMapping(value = "/add2", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee addNewEmployeeWithResource(@RequestBody @Valid EmployeeCreds employee) {
         Employee emp = new Employee();
@@ -54,16 +69,31 @@ public class EmployeeController {
         return employeeService.addEmployee(emp);
     }
 
+    /**
+     * addEmployee method: Takes in a employee object as the input.
+     * @param employee newly persisted employee object
+     * @return the newly added employee object
+     */
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee addNewEmployee(@RequestBody @Valid Employee employee) {
         return employeeService.addEmployee(employee);
     }
 
+    /**
+     * update method: The employee object is inputted and changes are saved.
+     * @param employee newly updated employee object
+     * @return updated/modified employee object
+     */
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee updateEmployee(@RequestBody @Valid Employee employee) {
         return employeeService.update(employee);
     }
 
+    /**
+     * updateResource method: Gets an employee based on employeeId as input, along with a resourceId to update.
+     * @param employee employeeCreds DTO object
+     * @return updated/modified employee object
+     */
     @PostMapping(value = "/updateresource", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee updateResource(@RequestBody @Valid EmployeeCreds employee) {
         Employee emp = employeeService.getEmployeeById(employee.getId());
@@ -72,6 +102,11 @@ public class EmployeeController {
         return employeeService.addEmployee(emp);
     }
 
+    /**
+     * updateAll method: The employee object is inputted, along with a resourceId, and changes are saved.
+     * @param employee newly updated employee object
+     * @return updated/modified employee object
+     */
     @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee updateAll(@RequestBody @Valid EmployeeCreds employee) {
         Employee emp = new Employee();
@@ -86,6 +121,11 @@ public class EmployeeController {
         return employeeService.addEmployee(emp);
     }
 
+    /**
+     * getAllById method:
+     * @param ids employeeId int values
+     * @return a set of employees with matching ids
+     */
     @GetMapping (value = "/getallbyid", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllById (@RequestParam List<Integer> ids){
         List<Employee> employees = new ArrayList<>();
@@ -95,6 +135,11 @@ public class EmployeeController {
         return employees;
     }
 
+    /**
+     * getByid method: Returns an employee object when the id int matches a record in the database.
+     * @param employee employeeCreds DTO object
+     * @return an employee with matching id
+     */
     @PostMapping(value = "/getbyid", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getByid(@RequestBody @Valid EmployeeCreds employee) {
         int id = employee.getId();
@@ -102,6 +147,11 @@ public class EmployeeController {
         return employeeService.getEmployeeById(id);
     }
 
+    /**
+     * getByfirstname method: Returns an employee object when the firstName String matches a record in the database.
+     * @param employee employeeCreds DTO object
+     * @return an employee with matching firstName
+     */
     @PostMapping(value = "/getbyfirstname", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getByfirstname(@RequestBody @Valid EmployeeCreds employee) {
         String fname = employee.getFirstName();
@@ -109,11 +159,19 @@ public class EmployeeController {
         return employeeService.findByFirstname(fname);
     }
 
+    /**
+     * getAllEmployees method: Returns a list of all the employee objects in the database.
+     * @return a list of all the employees
+     */
     @GetMapping("/employees")
     public List<Employee> getAllEmployees() {
         return employeeService.getall();
     }
 
+    /**
+     * test method: test endpoint to ensure controller is working
+     * @return String saying "employeeController loaded"
+     */
     @GetMapping("/test")
     public @ResponseBody String test() {
         return "employeeController loaded";
