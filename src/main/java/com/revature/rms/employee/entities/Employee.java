@@ -2,6 +2,7 @@ package com.revature.rms.employee.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.revature.rms.employee.dtos.EmployeeCreds;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -43,7 +44,62 @@ public class Employee {
     private ResourceMetadata resourceMetadata;
 
 
+    public Employee() {super();
+    }
 
+    public Employee(String firstName) {
+        this.firstName = firstName;
+    }
+    public Employee(String firstName, String lastName, String email, String title) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.title = title;
+    }
+
+    public Employee(String firstName, String lastName, String email, String title, Department department) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.title = title;
+        this.department = department;
+    }
+
+    public Employee(String firstName, String lastName, String email, String title, ResourceMetadata resourceMetadata) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.title = title;
+        this.resourceMetadata = resourceMetadata;
+    }
+
+    public Employee(String firstName, String lastName, String email, String title, Department department, ResourceMetadata resourceMetadata) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.title = title;
+        this.department = department;
+        this.resourceMetadata = resourceMetadata;
+    }
+
+    public Employee(int id, String firstName, String lastName, String email, String title, Department department, ResourceMetadata resourceMetadata) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.title = title;
+        this.department = department;
+        this.resourceMetadata = resourceMetadata;
+    }
+
+    public Employee(EmployeeCreds employeeCreds) {
+        this.id = employeeCreds.getId();
+        this.firstName = employeeCreds.getFirstName();
+        this.lastName = employeeCreds.getLastName();
+        this.email = employeeCreds.getEmail();
+        this.title = employeeCreds.getTitle();
+        this.department = employeeCreds.getDepartment();
+    }
 
     public int getId() {
         return id;
@@ -100,57 +156,6 @@ public class Employee {
     public void setResourceMetadata(ResourceMetadata resourceMetadata) {
         this.resourceMetadata = resourceMetadata;
     }
-
-
-    public Employee() {super();
-    }
-
-    public Employee(String firstName) {
-        this.firstName = firstName;
-    }
-    public Employee(String firstName, String lastName, String email, String title) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.title = title;
-    }
-
-    public Employee(String firstName, String lastName, String email, String title, Department department) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.title = title;
-        this.department = department;
-    }
-
-    public Employee(String firstName, String lastName, String email, String title, ResourceMetadata resourceMetadata) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.title = title;
-        this.resourceMetadata = resourceMetadata;
-    }
-
-    public Employee(String firstName, String lastName, String email, String title, Department department, ResourceMetadata resourceMetadata) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.title = title;
-        this.department = department;
-        this.resourceMetadata = resourceMetadata;
-    }
-
-    public Employee(int id, String firstName, String lastName, String email, String title, Department department, ResourceMetadata resourceMetadata) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.title = title;
-        this.department = department;
-        this.resourceMetadata = resourceMetadata;
-    }
-
-
 
     @Override
     public boolean equals(Object o) {

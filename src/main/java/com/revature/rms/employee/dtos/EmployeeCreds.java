@@ -9,28 +9,25 @@ public class EmployeeCreds {
     private String email;
     private String title;
     private Department department;
-    private int resourceId;
 
-    public EmployeeCreds(int id, String firstName, String lastName, String email, String title, Department department, int resourceId) {
+    public EmployeeCreds(int id, String firstName, String lastName, String email, String title, Department department) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.title = title;
         this.department = department;
-        this.resourceId = resourceId;
     }
 
     public EmployeeCreds() {super();
     }
 
-    public EmployeeCreds(String firstName, String lastName, String email, String title, Department department, int resourceId) {
+    public EmployeeCreds(String firstName, String lastName, String email, String title, Department department) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.title = title;
         this.department = department;
-        this.resourceId = resourceId;
     }
 
     public int getId() {
@@ -81,14 +78,6 @@ public class EmployeeCreds {
         this.department = department;
     }
 
-    public int getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(int resourceId) {
-        this.resourceId = resourceId;
-    }
-
     @Override
     public String toString() {
         return "employeeCreds{" +
@@ -98,7 +87,6 @@ public class EmployeeCreds {
                 ", email='" + email + '\'' +
                 ", title='" + title + '\'' +
                 ", department=" + department +
-                ", resourceId=" + resourceId +
                 '}';
     }
 }
