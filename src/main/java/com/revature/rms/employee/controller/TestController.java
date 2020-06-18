@@ -14,11 +14,9 @@ public class TestController {
         return "/hello this is hoang le check ";
     }
 
-
     @GetMapping(value= "/colorHex", produces = MediaType.TEXT_PLAIN_VALUE)
     public String getColorHex(){
         return "ffa500";
     }
-
 
 }

@@ -1,25 +1,33 @@
 package com.revature.rms.employee.services;
 
+import com.netflix.discovery.converters.Auto;
+import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Employee;
+import com.revature.rms.employee.entities.ResourceMetadata;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
+import com.revature.rms.employee.repositories.ResourceMetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class EmployeeService {
 
-    private EmployeeRepository employeeRepo;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     public EmployeeService(EmployeeRepository repo) {
         super();
-        this.employeeRepo = repo;
+        this.employeeRepository = repo;
     }
+
+    @Autowired
+    private ResourceMetadataRepository metadataRepository;
 
     /**
      * getEmployeeById method: Returns an employee object when the id int matches a record in the database.
@@ -29,7 +37,7 @@ public class EmployeeService {
      */
     @Transactional(readOnly = true)
     public Employee getEmployeeById(int id) throws ResourceNotFoundException{
-        return employeeRepo.findById(id);
+        return employeeRepository.findById(id);
     }
 
     /**
@@ -39,8 +47,16 @@ public class EmployeeService {
      * @return updated/modified employee object
      */
     @Transactional
-    public Employee update(Employee updatedEmp) {
-        return employeeRepo.save(updatedEmp);
+    public Employee update(EmployeeCreds updatedEmp, int id) {
+        Employee emp = new Employee(updatedEmp);
+        Employee oldEmp = employeeRepository.findById(emp.getId());
+        ResourceMetadata metadata = oldEmp.getResourceMetadata();
+        metadata.setLastModifier(id);
+        metadata.setLastModifiedDateTime(LocalDateTime.now().toString());
+        metadataRepository.save(metadata);
+        emp.setResourceMetadata(metadata);
+
+        return employeeRepository.save(emp);
     }
 
     /**
@@ -53,11 +69,16 @@ public class EmployeeService {
      * @return the newly added employee object
      */
     @Transactional
-    public Employee addEmployee(Employee newEmployee) {
+    public Employee addEmployee(EmployeeCreds newEmployee, int id) {
         if(newEmployee == null){
             throw new ResourceNotFoundException();
         }
-        return employeeRepo.save(newEmployee);
+        Employee employee = new Employee(newEmployee);
+        ResourceMetadata metadata = new ResourceMetadata(id, id, id);
+        metadataRepository.save(metadata);
+        employee.setResourceMetadata(metadata);
+
+        return employeeRepository.save(employee);
     }
 
     /**
@@ -68,7 +89,7 @@ public class EmployeeService {
      */
     @Transactional(readOnly = true)
     public Employee findByFirstname(String name) throws ResourceNotFoundException{
-        return employeeRepo.findByFirstName(name);
+        return employeeRepository.findByFirstName(name);
 
     }
 
@@ -79,7 +100,7 @@ public class EmployeeService {
      */
     @Transactional(readOnly = true)
     public List<Employee> getall() throws ResourceNotFoundException{
-        Iterable<Employee> e = employeeRepo.findAll();
+        Iterable<Employee> e = employeeRepository.findAll();
         List<Employee> list = getListFromIterator(e);
         return list;
     }

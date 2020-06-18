@@ -2,6 +2,7 @@ package com.revature.rms.employee.controller;
 
 import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Employee;
+import com.revature.rms.employee.entities.ResourceMetadata;
 import com.revature.rms.employee.services.EmployeeService;
 import com.revature.rms.employee.services.ResourceMetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,23 +51,16 @@ public class EmployeeController {
         }
         return employees;
     }
-
     /**
      * addNewEmployeeWithResource method: Takes in a employee object as the input, along with a resourceId.
      * @param employee employeeCreds DTO object
      * @return the newly added employee object
      */
     @PostMapping(value = "/add2", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee addNewEmployeeWithResource(@RequestBody @Valid EmployeeCreds employee) {
-        Employee emp = new Employee();
-        emp.setFirstName(employee.getFirstName());
-        emp.setLastName(employee.getLastName());
-        emp.setEmail(employee.getEmail());
-        emp.setTitle(employee.getTitle());
-        emp.setDepartment(employee.getDepartment());
-        emp.setResourceMetadata(service.findById(employee.getResourceId()));
+    public Employee addNewEmployeeWithResource(@RequestBody @Valid EmployeeCreds employee,
+                                               @RequestHeader(value = "Authorization") int id) {
 
-        return employeeService.addEmployee(emp);
+        return employeeService.addEmployee(employee, id);
     }
 
     /**
@@ -75,8 +69,9 @@ public class EmployeeController {
      * @return the newly added employee object
      */
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee addNewEmployee(@RequestBody @Valid Employee employee) {
-        return employeeService.addEmployee(employee);
+    public Employee addNewEmployee(@RequestBody @Valid EmployeeCreds employee,
+                                   @RequestHeader(value = "Authorization") int id) {
+        return employeeService.addEmployee(employee, id);
     }
 
     /**
@@ -85,41 +80,43 @@ public class EmployeeController {
      * @return updated/modified employee object
      */
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee updateEmployee(@RequestBody @Valid Employee employee) {
-        return employeeService.update(employee);
+    public Employee updateEmployee(@RequestBody @Valid EmployeeCreds employee,
+                                   @RequestHeader(value = "Authorization") int id) {
+        return employeeService.update(employee, id);
     }
 
-    /**
-     * updateResource method: Gets an employee based on employeeId as input, along with a resourceId to update.
-     * @param employee employeeCreds DTO object
-     * @return updated/modified employee object
-     */
-    @PostMapping(value = "/updateresource", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee updateResource(@RequestBody @Valid EmployeeCreds employee) {
-        Employee emp = employeeService.getEmployeeById(employee.getId());
-        emp.setResourceMetadata(service.findById(employee.getResourceId()));
+//    /**
+//     * updateResource method: Gets an employee based on employeeId as input, along with a resourceId to update.
+//     * @param employee employeeCreds DTO object
+//     * @return updated/modified employee object
+//     */
+//    @PostMapping(value = "/updateresource", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public Employee updateResource(@RequestBody @Valid EmployeeCreds employee,
+//                                   @RequestHeader(value = "Authorization") int id) {
+//        EmployeeCreds emp = employeeService.getEmployeeById(employee.getId());
+//
+//        return employeeService.addEmployee(emp, id);
+//    }
 
-        return employeeService.addEmployee(emp);
-    }
-
-    /**
-     * updateAll method: The employee object is inputted, along with a resourceId, and changes are saved.
-     * @param employee newly updated employee object
-     * @return updated/modified employee object
-     */
-    @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee updateAll(@RequestBody @Valid EmployeeCreds employee) {
-        Employee emp = new Employee();
-        emp.setId(employee.getId());
-        emp.setFirstName(employee.getFirstName());
-        emp.setLastName(employee.getLastName());
-        emp.setEmail(employee.getEmail());
-        emp.setTitle(employee.getTitle());
-        emp.setDepartment(employee.getDepartment());
-        emp.setResourceMetadata(service.findById(employee.getResourceId()));
-
-        return employeeService.addEmployee(emp);
-    }
+//    /**
+//     * updateAll method: The employee object is inputted, along with a resourceId, and changes are saved.
+//     * @param employee newly updated employee object
+//     * @return updated/modified employee object
+//     */
+//    @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public Employee updateAll(@RequestBody @Valid EmployeeCreds employee,
+//                              @RequestHeader(value = "Authorization") int id) {
+//        Employee emp = new Employee();
+//        emp.setId(employee.getId());
+//        emp.setFirstName(employee.getFirstName());
+//        emp.setLastName(employee.getLastName());
+//        emp.setEmail(employee.getEmail());
+//        emp.setTitle(employee.getTitle());
+//        emp.setDepartment(employee.getDepartment());
+//        emp.setResourceMetadata(service.findById(employee.getResourceId()));
+//
+//        return employeeService.addEmployee(emp);
+//    }
 
     /**
      * getAllById method:
