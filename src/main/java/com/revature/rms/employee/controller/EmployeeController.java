@@ -165,6 +165,12 @@ public class EmployeeController {
         return employeeService.getall();
     }
 
+    /**
+     * getEmployeesByOwnerId method: Retrieves a list of employees based on the boss' ID
+     * @param id Boss' ID
+     * @return List of employees
+     */
+
     @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getEmployeesByOwnerId(@PathVariable int id){
         return employeeService.findEmployeeByOwnerId(id);

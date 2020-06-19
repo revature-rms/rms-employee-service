@@ -41,6 +41,12 @@ public class EmployeeService {
         return employeeRepository.findById(id);
     }
 
+    /**
+     * findEmployeeByOwnerId method: Retrieves a list of employees based on boss' ID
+     * @param id Boss' ID
+     * @return List of employees
+     */
+
     @Transactional(readOnly = true)
     public List<Employee> findEmployeeByOwnerId(int id){
 
