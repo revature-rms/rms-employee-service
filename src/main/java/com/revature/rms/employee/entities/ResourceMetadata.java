@@ -29,29 +29,29 @@ public class ResourceMetadata {
     private int resourceOwner;
 
     @Column
-    private boolean isActive;
+    private boolean currentlyActive;
 
     public ResourceMetadata() {
         super();
     }
 
-    public ResourceMetadata(int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean isActive) {
+    public ResourceMetadata(int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean currentlyActive) {
         this.resourceCreator = resourceCreator;
         this.resourceCreationDateTime = resourceCreationDateTime;
         this.lastModifier = lastModifier;
         this.lastModifiedDateTime = lastModifiedDateTime;
         this.resourceOwner = resourceOwner;
-        this.isActive = isActive;
+        this.currentlyActive = currentlyActive;
     }
 
-    public ResourceMetadata(int resourceId, int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean isActive) {
+    public ResourceMetadata(int resourceId, int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean currentlyActive) {
         this.resourceId = resourceId;
         this.resourceCreator = resourceCreator;
         this.resourceCreationDateTime = resourceCreationDateTime;
         this.lastModifier = lastModifier;
         this.lastModifiedDateTime = lastModifiedDateTime;
         this.resourceOwner = resourceOwner;
-        this.isActive = isActive;
+        this.currentlyActive = currentlyActive;
     }
 
     public ResourceMetadata(int resourceCreator, int lastModifier, int resourceOwner) {
@@ -60,7 +60,7 @@ public class ResourceMetadata {
         this.lastModifier = lastModifier;
         this.lastModifiedDateTime = LocalDateTime.now().toString();
         this.resourceOwner = resourceOwner;
-        this.isActive = true;
+        this.currentlyActive = true;
     }
 
     public ResourceMetadata(int lastModifier, int resourceOwner) {
@@ -117,12 +117,12 @@ public class ResourceMetadata {
         this.resourceOwner = resourceOwner;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public boolean isCurrentlyActive() {
+        return currentlyActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setCurrentlyActive(boolean isActive) {
+        this.currentlyActive = isActive;
     }
 
     @Override
@@ -134,14 +134,14 @@ public class ResourceMetadata {
                 resourceCreator == that.resourceCreator &&
                 lastModifier == that.lastModifier &&
                 resourceOwner == that.resourceOwner &&
-                isActive == that.isActive &&
+                currentlyActive == that.currentlyActive &&
                 Objects.equals(resourceCreationDateTime, that.resourceCreationDateTime) &&
                 Objects.equals(lastModifiedDateTime, that.lastModifiedDateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(resourceId, resourceCreator, resourceCreationDateTime, lastModifier, lastModifiedDateTime, resourceOwner, isActive);
+        return Objects.hash(resourceId, resourceCreator, resourceCreationDateTime, lastModifier, lastModifiedDateTime, resourceOwner, currentlyActive);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class ResourceMetadata {
                 ", lastModifier=" + lastModifier +
                 ", lastModifiedDateTime='" + lastModifiedDateTime + '\'' +
                 ", resourceOwner=" + resourceOwner +
-                ", isActive=" + isActive +
+                ", isActive=" + currentlyActive +
                 '}';
     }
 }
