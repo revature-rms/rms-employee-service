@@ -175,6 +175,17 @@ public class EmployeeController {
     }
 
     /**
+     * getEmployeesByOwnerId method: Retrieves a list of employees based on the boss' ID
+     * @param id Boss' ID
+     * @return List of employees
+     */
+
+    @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Employee> getEmployeesByOwnerId(@PathVariable int id){
+        return employeeService.findEmployeeByOwnerId(id);
+    }
+
+    /**
      * test method: test endpoint to ensure controller is working
      * @return String saying "employeeController loaded"
      */

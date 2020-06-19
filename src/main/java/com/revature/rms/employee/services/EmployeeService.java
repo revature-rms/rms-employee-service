@@ -5,6 +5,7 @@ import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.employee.entities.ResourceMetadata;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
+import com.revature.rms.employee.exceptions.BadRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
 import com.revature.rms.employee.repositories.ResourceMetadataRepository;
@@ -39,6 +40,38 @@ public class EmployeeService {
     @Transactional(readOnly = true)
     public Employee getEmployeeById(int id) throws ResourceNotFoundException{
         return employeeRepository.findById(id);
+    }
+
+    /**
+     * findEmployeeByOwnerId method: Retrieves a list of employees based on boss' ID
+     * @param id Boss' ID
+     * @return List of employees
+     */
+
+    @Transactional(readOnly = true)
+    public List<Employee> findEmployeeByOwnerId(int id){
+
+        if(id < 1){
+            throw new BadRequestException();
+        }
+
+        Iterable<Employee> allEmps = employeeRepository.findAll();
+
+        List<Employee> emps = new ArrayList<Employee>();
+
+        for(Employee emp : allEmps){
+            ResourceMetadata data = emp.getResourceMetadata();
+            if(data.getResourceOwner() == id){
+                emps.add(emp);
+            }
+        }
+
+        if(emps.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+
+        return emps;
+
     }
 
     /**
