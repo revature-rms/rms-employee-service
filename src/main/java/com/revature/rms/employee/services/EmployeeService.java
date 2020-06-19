@@ -3,11 +3,7 @@ package com.revature.rms.employee.services;
 import com.netflix.discovery.converters.Auto;
 import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Employee;
-<<<<<<< HEAD
-import com.revature.rms.employee.exceptions.InvalidRequestException;
-=======
 import com.revature.rms.employee.entities.ResourceMetadata;
->>>>>>> pre-dev
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
 import com.revature.rms.employee.repositories.ResourceMetadataRepository;
@@ -18,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -114,19 +109,5 @@ public class EmployeeService {
         List<T> list = new ArrayList<>();
         iterable.forEach(list::add);
         return list;
-    }
-
-    /**
-     *
-     * @param id
-     * @return
-     */
-    @Transactional
-    public Employee delete(int id) {
-        if (id <= 0) {
-            throw new InvalidRequestException();
-        }
-        Employee deleteEmployee = employeeRepository.findById(id);
-        return update(deleteEmployee);
     }
 }

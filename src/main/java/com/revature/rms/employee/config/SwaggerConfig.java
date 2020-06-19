@@ -15,6 +15,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
+    /**
+     * Docket api: provides the primary API configuration with sensible defaults and convenience methods for configuration
+     * @return returns an instance of ApiSelectorBuilder, which provides a way to control the endpoints exposed by Swagger.
+     */
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
@@ -23,6 +28,11 @@ public class SwaggerConfig {
                 .paths(PathSelectors.regex("/.*"))
                 .build().apiInfo(apiEndPointsInfo());
     }
+
+    /**
+     * apiEndPointsInfo provides description of the swagger documentation endpoint
+     * @return ApiInfoBuilder: returns a title, description, contact, license, licenseURL, and version of the API.
+     */
     private ApiInfo apiEndPointsInfo() {
         return new ApiInfoBuilder().title("RMS Employee service REST API")
                 .description("Employee service ")
