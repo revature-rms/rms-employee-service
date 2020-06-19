@@ -1,13 +1,21 @@
 package com.revature.rms.employee.services;
 
+import com.netflix.discovery.converters.Auto;
+import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Employee;
+<<<<<<< HEAD
 import com.revature.rms.employee.exceptions.InvalidRequestException;
+=======
+import com.revature.rms.employee.entities.ResourceMetadata;
+>>>>>>> pre-dev
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
+import com.revature.rms.employee.repositories.ResourceMetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +30,9 @@ public class EmployeeService {
         super();
         this.employeeRepository = repo;
     }
+
+    @Autowired
+    private ResourceMetadataRepository metadataRepository;
 
     /**
      * getEmployeeById method: Returns an employee object when the id int matches a record in the database.
@@ -41,8 +52,16 @@ public class EmployeeService {
      * @return updated/modified employee object
      */
     @Transactional
-    public Employee update(Employee updatedEmp) {
-        return employeeRepository.save(updatedEmp);
+    public Employee update(EmployeeCreds updatedEmp, int id) {
+        Employee emp = new Employee(updatedEmp);
+        Employee oldEmp = employeeRepository.findById(emp.getId());
+        ResourceMetadata metadata = oldEmp.getResourceMetadata();
+        metadata.setLastModifier(id);
+        metadata.setLastModifiedDateTime(LocalDateTime.now().toString());
+        metadataRepository.save(metadata);
+        emp.setResourceMetadata(metadata);
+
+        return employeeRepository.save(emp);
     }
 
     /**
@@ -55,11 +74,16 @@ public class EmployeeService {
      * @return the newly added employee object
      */
     @Transactional
-    public Employee addEmployee(Employee newEmployee) {
+    public Employee addEmployee(EmployeeCreds newEmployee, int id) {
         if(newEmployee == null){
             throw new ResourceNotFoundException();
         }
-        return employeeRepository.save(newEmployee);
+        Employee employee = new Employee(newEmployee);
+        ResourceMetadata metadata = new ResourceMetadata(id, id, id);
+        metadataRepository.save(metadata);
+        employee.setResourceMetadata(metadata);
+
+        return employeeRepository.save(employee);
     }
 
     /**

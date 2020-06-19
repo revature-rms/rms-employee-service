@@ -2,6 +2,7 @@ package com.revature.rms.employee.entities;
 
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -27,30 +28,44 @@ public class ResourceMetadata {
     @Column(nullable=false)
     private int resourceOwner;
 
+    @Column
+    private boolean currentlyActive;
+
     public ResourceMetadata() {
         super();
     }
 
-    public ResourceMetadata(int resourceId, int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner) {
+    public ResourceMetadata(int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean currentlyActive) {
+        this.resourceCreator = resourceCreator;
+        this.resourceCreationDateTime = resourceCreationDateTime;
+        this.lastModifier = lastModifier;
+        this.lastModifiedDateTime = lastModifiedDateTime;
+        this.resourceOwner = resourceOwner;
+        this.currentlyActive = currentlyActive;
+    }
+
+    public ResourceMetadata(int resourceId, int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean currentlyActive) {
         this.resourceId = resourceId;
         this.resourceCreator = resourceCreator;
         this.resourceCreationDateTime = resourceCreationDateTime;
         this.lastModifier = lastModifier;
         this.lastModifiedDateTime = lastModifiedDateTime;
         this.resourceOwner = resourceOwner;
-    }
-
-    public ResourceMetadata(int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner) {
-        this.resourceCreator = resourceCreator;
-        this.resourceCreationDateTime = resourceCreationDateTime;
-        this.lastModifier = lastModifier;
-        this.lastModifiedDateTime = lastModifiedDateTime;
-        this.resourceOwner = resourceOwner;
+        this.currentlyActive = currentlyActive;
     }
 
     public ResourceMetadata(int resourceCreator, int lastModifier, int resourceOwner) {
         this.resourceCreator = resourceCreator;
+        this.resourceCreationDateTime = LocalDateTime.now().toString();
         this.lastModifier = lastModifier;
+        this.lastModifiedDateTime = LocalDateTime.now().toString();
+        this.resourceOwner = resourceOwner;
+        this.currentlyActive = true;
+    }
+
+    public ResourceMetadata(int lastModifier, int resourceOwner) {
+        this.lastModifier = lastModifier;
+        this.lastModifiedDateTime = LocalDateTime.now().toString();
         this.resourceOwner = resourceOwner;
     }
 
@@ -102,6 +117,14 @@ public class ResourceMetadata {
         this.resourceOwner = resourceOwner;
     }
 
+    public boolean isCurrentlyActive() {
+        return currentlyActive;
+    }
+
+    public void setCurrentlyActive(boolean isActive) {
+        this.currentlyActive = isActive;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,13 +134,14 @@ public class ResourceMetadata {
                 resourceCreator == that.resourceCreator &&
                 lastModifier == that.lastModifier &&
                 resourceOwner == that.resourceOwner &&
+                currentlyActive == that.currentlyActive &&
                 Objects.equals(resourceCreationDateTime, that.resourceCreationDateTime) &&
                 Objects.equals(lastModifiedDateTime, that.lastModifiedDateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(resourceId, resourceCreator, resourceCreationDateTime, lastModifier, lastModifiedDateTime, resourceOwner);
+        return Objects.hash(resourceId, resourceCreator, resourceCreationDateTime, lastModifier, lastModifiedDateTime, resourceOwner, currentlyActive);
     }
 
     @Override
@@ -129,6 +153,7 @@ public class ResourceMetadata {
                 ", lastModifier=" + lastModifier +
                 ", lastModifiedDateTime='" + lastModifiedDateTime + '\'' +
                 ", resourceOwner=" + resourceOwner +
+                ", isActive=" + currentlyActive +
                 '}';
     }
 }
