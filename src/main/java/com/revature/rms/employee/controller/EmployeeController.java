@@ -165,6 +165,11 @@ public class EmployeeController {
         return employeeService.getall();
     }
 
+    @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Employee> getEmployeesByOwnerId(@PathVariable int id){
+        return employeeService.findEmployeeByOwnerId(id);
+    }
+
     /**
      * test method: test endpoint to ensure controller is working
      * @return String saying "employeeController loaded"
