@@ -34,7 +34,7 @@ public class EmployeeController {
      * @return an employee with matching id
      */
     @GetMapping(value="/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee getEmployeeById(@PathVariable @RequestBody int id) {
+    public Employee getEmployeeById(@PathVariable int id) {
         return employeeService.getEmployeeById(id);
     }
 
