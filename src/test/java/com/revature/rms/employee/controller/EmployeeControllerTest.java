@@ -1,6 +1,7 @@
 package com.revature.rms.employee.controller;
 
 import com.revature.rms.employee.controller.EmployeeController;
+import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Department;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.employee.entities.ResourceMetadata;
@@ -45,7 +46,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    public void testFindEmployeeByValidId() {
+    public void testGetEmployeeByValidId() {
         int id = 1;
 
         Employee expectedResult = new Employee("Steven", "Kelsey",
@@ -71,4 +72,29 @@ public class EmployeeControllerTest {
 //        when(employeeService.getEmployeeById(Mockito.any())).thenReturn(Optional.empty());
 //        employeeController.getEmployeeById(id);
 //    }
+
+    @Test
+    @Ignore
+    //TODO: fix matcher issue.
+    public void testAddNewEmployeeWithValidEmployee() {
+        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
+                department);
+        Employee persistedEmployee = new Employee("Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
+                department, new ResourceMetadata());
+        when(employeeService.addEmployee(Mockito.any(), 1)).thenReturn(persistedEmployee);
+        assertEquals(employeeController.addNewEmployee(testEmployee, 1), persistedEmployee);
+    }
+
+    @Test
+    @Ignore
+    //TODO: fix it. Everything is broken.
+    public void testAddNewEmployeeWithNullEmployee() {
+        Employee expectedResult = new Employee("Steven", "Kelsey",
+                "steven.kelsey@revature.com","Manager of Technology",
+                department, new ResourceMetadata());
+        when(employeeService.addEmployee(Mockito.any(), 1)).thenReturn(expectedResult);
+        assertEquals(employeeController.addNewEmployee(null, 1), expectedResult);
+    }
 }

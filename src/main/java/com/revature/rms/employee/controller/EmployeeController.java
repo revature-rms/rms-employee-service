@@ -3,6 +3,7 @@ package com.revature.rms.employee.controller;
 import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.employee.entities.ResourceMetadata;
+import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.services.EmployeeService;
 import com.revature.rms.employee.services.ResourceMetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,6 +164,14 @@ public class EmployeeController {
     @GetMapping("/employees")
     public List<Employee> getAllEmployees() {
         return employeeService.getall();
+    }
+
+    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteEmployeeById(@PathVariable int id) {
+        if (id <= 0) {
+            throw new InvalidRequestException();
+        }
+        employeeService.delete(id);
     }
 
     /**

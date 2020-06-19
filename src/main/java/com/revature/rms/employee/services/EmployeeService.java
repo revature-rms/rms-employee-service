@@ -4,6 +4,7 @@ import com.netflix.discovery.converters.Auto;
 import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.employee.entities.ResourceMetadata;
+import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.exceptions.BadRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
@@ -142,5 +143,13 @@ public class EmployeeService {
         List<T> list = new ArrayList<>();
         iterable.forEach(list::add);
         return list;
+    }
+
+    @Transactional
+    public void delete(int id) {
+        if (id <= 0) {
+            throw new InvalidRequestException();
+        }
+        employeeRepository.deleteById(id);
     }
 }
