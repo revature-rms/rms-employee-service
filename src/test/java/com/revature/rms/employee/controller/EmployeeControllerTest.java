@@ -5,7 +5,10 @@ import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Department;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.employee.entities.ResourceMetadata;
+import com.revature.rms.employee.exceptions.InvalidRequestException;
+import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.services.EmployeeService;
+import oracle.security.crypto.util.InvalidInputException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,46 +58,59 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    @Ignore
-    //TODO: NullPointerException fix.
-    public void testGetEmployeeWithInvalidBuilding() {
+    public void testGetEmployeeWithInvalidEmployee() {
         int id = 5013;
-        when(employeeService.getEmployeeById(Mockito.any())).thenReturn(null);
+        when(employeeService.getEmployeeById(id)).thenReturn(null);
         assertEquals(employeeController.getEmployeeById(id), null);
     }
 
-//    @Test
-//    @Ignore
-////    TODO: find out optional issue.
-//    public void testGetEmployeeByNotFoundId() {
-//        int id = 98723;
-//
-//        when(employeeService.getEmployeeById(Mockito.any())).thenReturn(Optional.empty());
-//        employeeController.getEmployeeById(id);
-//    }
+    @Test(expected = ResourceNotFoundException.class)
+    public void testGetEmployeeByNotFoundId() {
+        int id = 1;
+
+        when(employeeService.getEmployeeById(1)).thenThrow(new ResourceNotFoundException());
+        employeeController.getEmployeeById(id);
+    }
 
     @Test
-    @Ignore
-    //TODO: fix matcher issue.
     public void testAddNewEmployeeWithValidEmployee() {
         EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
         Employee persistedEmployee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
-                department, new ResourceMetadata());
-        when(employeeService.addEmployee(Mockito.any(), 1)).thenReturn(persistedEmployee);
+                department);
+        when(employeeService.addEmployee(testEmployee,1)).thenReturn(persistedEmployee);
         assertEquals(employeeController.addNewEmployee(testEmployee, 1), persistedEmployee);
     }
 
-    @Test
+    @Test(expected = ResourceNotFoundException.class)
     @Ignore
     //TODO: fix it. Everything is broken.
     public void testAddNewEmployeeWithNullEmployee() {
         Employee expectedResult = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com","Manager of Technology",
-                department, new ResourceMetadata());
+                department);
         when(employeeService.addEmployee(Mockito.any(), 1)).thenReturn(expectedResult);
         assertEquals(employeeController.addNewEmployee(null, 1), expectedResult);
+    }
+
+    @Test
+    public void testDeleteEmployeeWithValidId() {
+        int id = 1;
+
+        employeeController.deleteEmployeeById(id);
+        verify(employeeService, times(1)).delete(id);
+    }
+
+    @Test(expected = InvalidRequestException.class)
+    public void testDeleteEmployeeWithInvalidId() {
+        Employee testEmployee = new Employee("Steven", "Kelsey",
+                "steven.kelsey@revature.com","Manager of Technology",
+                department);
+                int testId = -1;
+        when(employeeService.getEmployeeById(testId)).thenReturn((testEmployee));
+        employeeController.deleteEmployeeById(testId);
+        verify(employeeService, times(0)).delete(testId);
     }
 }
