@@ -47,7 +47,6 @@ public class EmployeeService {
      * @param id Boss' ID
      * @return List of employees
      */
-
     @Transactional(readOnly = true)
     public List<Employee> findEmployeeByOwnerId(int id){
 
@@ -145,6 +144,10 @@ public class EmployeeService {
         return list;
     }
 
+    /**
+     * delete method: Deletes an employee object based on its id int
+     * @param id employeeId int value
+     */
     @Transactional
     public void delete(int id) {
         if (id <= 0) {

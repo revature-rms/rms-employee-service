@@ -86,39 +86,6 @@ public class EmployeeController {
         return employeeService.update(employee, id);
     }
 
-//    /**
-//     * updateResource method: Gets an employee based on employeeId as input, along with a resourceId to update.
-//     * @param employee employeeCreds DTO object
-//     * @return updated/modified employee object
-//     */
-//    @PostMapping(value = "/updateresource", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public Employee updateResource(@RequestBody @Valid EmployeeCreds employee,
-//                                   @RequestHeader(value = "Authorization") int id) {
-//        EmployeeCreds emp = employeeService.getEmployeeById(employee.getId());
-//
-//        return employeeService.addEmployee(emp, id);
-//    }
-
-//    /**
-//     * updateAll method: The employee object is inputted, along with a resourceId, and changes are saved.
-//     * @param employee newly updated employee object
-//     * @return updated/modified employee object
-//     */
-//    @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public Employee updateAll(@RequestBody @Valid EmployeeCreds employee,
-//                              @RequestHeader(value = "Authorization") int id) {
-//        Employee emp = new Employee();
-//        emp.setId(employee.getId());
-//        emp.setFirstName(employee.getFirstName());
-//        emp.setLastName(employee.getLastName());
-//        emp.setEmail(employee.getEmail());
-//        emp.setTitle(employee.getTitle());
-//        emp.setDepartment(employee.getDepartment());
-//        emp.setResourceMetadata(service.findById(employee.getResourceId()));
-//
-//        return employeeService.addEmployee(emp);
-//    }
-
     /**
      * getAllById method:
      * @param ids employeeId int values
@@ -166,6 +133,10 @@ public class EmployeeController {
         return employeeService.getall();
     }
 
+    /**
+     * deleteEmployeeById method: Deletes an employee object based on its id int
+     * @param id employeeId int value
+     */
     @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void deleteEmployeeById(@PathVariable int id) {
         if (id <= 0) {
