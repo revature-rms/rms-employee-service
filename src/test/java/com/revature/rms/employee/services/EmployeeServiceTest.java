@@ -50,13 +50,11 @@ public class EmployeeServiceTest {
      * testGetEmployeeById ensures EmployeeService().getEmployeeById() returns an existing Employee object.
      */
     @Test
-    @Ignore
-    //TODO: Fix assertEquals always null issue
     public void testGetEmployeeById() {
-        Employee expectedEmployee = new Employee(1,"Steven", "Kelsey",
+        Employee expectedEmployee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department, new ResourceMetadata());
-        when(employeeRepository.findById(Mockito.any())).thenReturn(Optional.of(expectedEmployee));
+        when(employeeRepository.findById(1)).thenReturn(expectedEmployee);
         Employee actualEmployee = employeeRepository.findById(1);
         assertEquals(actualEmployee, expectedEmployee);
     }
@@ -66,7 +64,7 @@ public class EmployeeServiceTest {
      */
     @Test
     public void testFindByFirstname() {
-        Employee expectedEmployee = new Employee(1,"Steven", "Kelsey",
+        Employee expectedEmployee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department, new ResourceMetadata());
         when(employeeRepository.findByFirstName(Mockito.any())).thenReturn(expectedEmployee);
@@ -83,10 +81,10 @@ public class EmployeeServiceTest {
     @Ignore
     //TODO: NullPointerException issue due to EmployeeCreds to Employee conversion
     public void testUpdateWithValidEmployee() {
-        EmployeeCreds testEmployee = new EmployeeCreds(1,"Steven", "Kelsey",
+        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
-        EmployeeCreds expectedResult = new EmployeeCreds(1,"Steven", "Kelsey",
+        EmployeeCreds expectedResult = new EmployeeCreds("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
         when(employeeRepository.save(Mockito.any())).thenReturn(expectedResult);
@@ -101,7 +99,6 @@ public class EmployeeServiceTest {
     @Test
     @Ignore
     //TODO: NullPointerException issue due to EmployeeCreds to Employee conversion
-
     public void testAddEmployeeWithValidEmployee() {
         EmployeeCreds testEmployee = new EmployeeCreds(1,"Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
@@ -113,6 +110,4 @@ public class EmployeeServiceTest {
         Employee actualResult = employeeService.addEmployee(testEmployee, 1);
         assertEquals(actualResult, expectedResult);
     }
-
-
 }

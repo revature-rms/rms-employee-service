@@ -35,7 +35,7 @@ public class EmployeeControllerTest {
     private Department department;
 
     @Test
-    public void testFindAllEmployeessWithValidEmployee(){
+    public void testFindAllEmployeesWithValidEmployee(){
         Employee testEmployee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department, new ResourceMetadata());
@@ -55,13 +55,8 @@ public class EmployeeControllerTest {
         Employee expectedResult = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com","Manager of Technology",
                 department, new ResourceMetadata());
-    }
-
-    @Test
-    public void testGetEmployeeWithInvalidEmployee() {
-        int id = 5013;
-        when(employeeService.getEmployeeById(id)).thenReturn(null);
-        assertEquals(employeeController.getEmployeeById(id), null);
+        when(employeeService.getEmployeeById(1)).thenReturn(expectedResult);
+        assertEquals(employeeController.getEmployeeById(id), expectedResult);
     }
 
     @Test(expected = ResourceNotFoundException.class)
@@ -70,6 +65,33 @@ public class EmployeeControllerTest {
 
         when(employeeService.getEmployeeById(1)).thenThrow(new ResourceNotFoundException());
         employeeController.getEmployeeById(id);
+    }
+
+    @Test
+    @Ignore
+    public void testGetEmployeesByValidIds() {
+        Employee employee1 = new Employee();
+        Employee employee2 = new Employee();
+
+        Set<Integer> ids = new HashSet<>();
+        ids.add(1);
+        ids.add(2);
+        Set<Employee> employees = new HashSet<>();
+        employees.add(employee1);
+        employees.add(employee2);
+
+        for (int s:ids ){
+            employees.add(employeeService.getEmployeeById(s));
+        }
+        when(employeeService.getEmployeeById(1)).thenReturn((Employee) employees);
+        assertEquals(employeeController.getEmployeesById(ids), employees);
+    }
+
+    @Test
+    public void testGetEmployeeWithInvalidEmployee() {
+        int id = 0;
+        when(employeeService.getEmployeeById(id)).thenReturn(null);
+        assertEquals(employeeController.getEmployeeById(id), null);
     }
 
     @Test
@@ -91,7 +113,7 @@ public class EmployeeControllerTest {
         Employee expectedResult = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com","Manager of Technology",
                 department);
-        when(employeeService.addEmployee(Mockito.any(), 1)).thenReturn(expectedResult);
+        when(employeeService.addEmployee(Mockito.any(), eq(1))).thenReturn(expectedResult);
         assertEquals(employeeController.addNewEmployee(null, 1), expectedResult);
     }
 
