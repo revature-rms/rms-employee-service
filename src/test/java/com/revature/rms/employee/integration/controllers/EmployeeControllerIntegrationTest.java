@@ -40,10 +40,8 @@ public class EmployeeControllerIntegrationTest {
      * @throws Exception from perform()
      */
     @Test
-    @Ignore
-    //TODO: find out how get passing assertion. Receiving a 404, when should be getting 200 OK.
     public void testGetAllEmployeesWithExistingEmployeesExpecting200() throws Exception {
-        this.mockMvc.perform(get("/v1/employees").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        this.mockMvc.perform(get("/employee/employees").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 }
