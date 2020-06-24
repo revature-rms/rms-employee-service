@@ -38,11 +38,14 @@ public class EmployeeServiceTest {
      */
     @Test
     public void testGetAll() {
+        //Arrange
         Employee employee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department, new ResourceMetadata());
         List<Employee> mockEmployeeList = Arrays.asList(employee);
+        //Act
         when(employeeRepository.findAll()).thenReturn(mockEmployeeList);
+        //Assert
         assertEquals(mockEmployeeList, employeeService.getall());
     }
 
@@ -51,11 +54,32 @@ public class EmployeeServiceTest {
      */
     @Test
     public void testGetEmployeeById() {
+        //Arrange
         Employee expectedEmployee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department, new ResourceMetadata());
+        //Act
         when(employeeRepository.findById(1)).thenReturn(expectedEmployee);
-        Employee actualEmployee = employeeRepository.findById(1);
+        Employee actualEmployee = employeeService.getEmployeeById(1);
+        //Assert
+        assertEquals(actualEmployee, expectedEmployee);
+    }
+
+    /**
+     * testGetEmployeeByOwnerId EmployeeService().findEmployeeByOwnerId() returns an existing Employee object.
+     */
+    @Test
+    @Ignore
+    //TODO: fix ResourceNotFoundException
+    public void testGetEmployeeByOwnerId() {
+        //Arrange
+        Employee expectedEmployee = new Employee("Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
+                department, new ResourceMetadata());
+        //Act
+        when(employeeRepository.findById(1)).thenReturn(expectedEmployee);
+        Employee actualEmployee = (Employee) employeeService.findEmployeeByOwnerId(1);
+        //Assert
         assertEquals(actualEmployee, expectedEmployee);
     }
 
@@ -64,11 +88,14 @@ public class EmployeeServiceTest {
      */
     @Test
     public void testFindByFirstname() {
+        //Arrange
         Employee expectedEmployee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department, new ResourceMetadata());
+        //Act
         when(employeeRepository.findByFirstName(Mockito.any())).thenReturn(expectedEmployee);
         Employee actualEmployee = employeeService.findByFirstname("Steven");
+        //Assert
         assertEquals(expectedEmployee, actualEmployee);
     }
 
@@ -81,14 +108,17 @@ public class EmployeeServiceTest {
     @Ignore
     //TODO: NullPointerException issue due to EmployeeCreds to Employee conversion
     public void testUpdateWithValidEmployee() {
-        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
+        //Arrange
+        EmployeeCreds testEmployee = new EmployeeCreds(1,"Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
-        EmployeeCreds expectedResult = new EmployeeCreds("Steven", "Kelsey",
+        EmployeeCreds expectedResult = new EmployeeCreds(1,"Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
-        when(employeeRepository.save(Mockito.any())).thenReturn(expectedResult);
+        //Act
+
         Employee actualResult = employeeService.update(testEmployee, 1);
+        //Assert
         assertEquals(expectedResult, actualResult);
     }
 
@@ -100,14 +130,18 @@ public class EmployeeServiceTest {
     @Ignore
     //TODO: NullPointerException issue due to EmployeeCreds to Employee conversion
     public void testAddEmployeeWithValidEmployee() {
-        EmployeeCreds testEmployee = new EmployeeCreds(1,"Steven", "Kelsey",
+        //Arrange
+        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
-        EmployeeCreds expectedResult = new EmployeeCreds(1,"Steven", "Kelsey",
+        Employee expectedResult = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
+        //Act
         when(employeeRepository.save(Mockito.any())).thenReturn(expectedResult);
-        Employee actualResult = employeeService.addEmployee(testEmployee, 1);
-        assertEquals(actualResult, expectedResult);
+        Employee actualResult = employeeService.update(testEmployee, 1);
+        //Assert
+        assertEquals(expectedResult, actualResult);
     }
+
 }

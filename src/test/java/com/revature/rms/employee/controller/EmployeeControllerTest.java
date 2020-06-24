@@ -1,6 +1,5 @@
 package com.revature.rms.employee.controller;
 
-import com.revature.rms.employee.controller.EmployeeController;
 import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Department;
 import com.revature.rms.employee.entities.Employee;
@@ -8,18 +7,17 @@ import com.revature.rms.employee.entities.ResourceMetadata;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.services.EmployeeService;
-import oracle.security.crypto.util.InvalidInputException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.data.util.Optionals;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
+
 /**
  * These tests are for additional validation and to ensure the EmployeeService methods are working successfully when called
  * by the EmployeeController methods. See EmployeeServiceTests for more details on testing for EmployeeService methods.
@@ -39,6 +37,9 @@ public class EmployeeControllerTest {
         Employee testEmployee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department, new ResourceMetadata());
+        List<Employee> testEmployeeList = Arrays.asList(testEmployee);
+        when(employeeService.getall()).thenReturn(testEmployeeList);
+        assertEquals(employeeController.getAllEmployees(), testEmployeeList);
     }
 
     @Test
@@ -59,6 +60,18 @@ public class EmployeeControllerTest {
         assertEquals(employeeController.getEmployeeById(id), expectedResult);
     }
 
+    @Test
+    public void testGetEmployeeByValidFirstName() {
+        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
+                department);
+        Employee expectedResult = new Employee("Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
+                department);
+        when(employeeService.findByFirstname("Steven")).thenReturn(expectedResult);
+        assertEquals(employeeController.getByfirstname(testEmployee), expectedResult);
+    }
+
     @Test(expected = ResourceNotFoundException.class)
     public void testGetEmployeeByNotFoundId() {
         int id = 1;
@@ -68,23 +81,30 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    @Ignore
     public void testGetEmployeesByValidIds() {
-        Employee employee1 = new Employee();
-        Employee employee2 = new Employee();
-
-        Set<Integer> ids = new HashSet<>();
+        Employee expectedResult = new Employee("Steven", "Kelsey",
+                "steven.kelsey@revature.com","Manager of Technology",
+                department, new ResourceMetadata());
+        when(employeeService.getEmployeeById(anyInt())).thenReturn(expectedResult);
+        Set<Employee> actualResult = new HashSet<>();
+        actualResult.add(expectedResult);
+        Set<Integer>  ids = new HashSet<>();
         ids.add(1);
-        ids.add(2);
-        Set<Employee> employees = new HashSet<>();
-        employees.add(employee1);
-        employees.add(employee2);
+        assertEquals(employeeController.getEmployeesById(ids), actualResult);
+    }
 
-        for (int s:ids ){
-            employees.add(employeeService.getEmployeeById(s));
-        }
-        when(employeeService.getEmployeeById(1)).thenReturn((Employee) employees);
-        assertEquals(employeeController.getEmployeesById(ids), employees);
+    @Test
+    @Ignore
+    public void testGetAllEmployeesByValidId() {
+        Employee expectedResult = new Employee("Steven", "Kelsey",
+                "steven.kelsey@revature.com","Manager of Technology",
+                department, new ResourceMetadata());
+        when(employeeService.getEmployeeById(anyInt())).thenReturn(expectedResult);
+        List<Employee> actualResult = new ArrayList<>();
+        actualResult.add(expectedResult);
+        List<Integer>  ids = new ArrayList<>();
+        ids.add(1);
+        assertEquals(employeeController.getAllEmployees(), actualResult);
     }
 
     @Test
@@ -106,15 +126,16 @@ public class EmployeeControllerTest {
         assertEquals(employeeController.addNewEmployee(testEmployee, 1), persistedEmployee);
     }
 
-    @Test(expected = ResourceNotFoundException.class)
-    @Ignore
-    //TODO: fix it. Everything is broken.
-    public void testAddNewEmployeeWithNullEmployee() {
-        Employee expectedResult = new Employee("Steven", "Kelsey",
-                "steven.kelsey@revature.com","Manager of Technology",
+    @Test
+    public void testAddNewEmployeeWithResourcesWithValidEmployee() {
+        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
                 department);
-        when(employeeService.addEmployee(Mockito.any(), eq(1))).thenReturn(expectedResult);
-        assertEquals(employeeController.addNewEmployee(null, 1), expectedResult);
+        Employee persistedEmployee = new Employee("Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
+                department);
+        when(employeeService.update(testEmployee,1)).thenReturn(persistedEmployee);
+        assertEquals(employeeController.updateEmployee(testEmployee, 1), persistedEmployee);
     }
 
     @Test
@@ -135,4 +156,5 @@ public class EmployeeControllerTest {
         employeeController.deleteEmployeeById(testId);
         verify(employeeService, times(0)).delete(testId);
     }
+
 }
