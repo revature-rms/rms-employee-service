@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  rms-employee-service:
+    image: rms-employee-service
+    build: .
+    ports:
+      - 10002
