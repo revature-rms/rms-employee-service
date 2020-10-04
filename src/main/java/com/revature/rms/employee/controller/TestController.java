@@ -11,14 +11,12 @@ public class TestController {
 
     @GetMapping(produces = MediaType.TEXT_PLAIN_VALUE)
     public String test(){
-        return "/hello this is hoang le check";
+        return "/hello this is hoang le check ";
     }
-
 
     @GetMapping(value= "/colorHex", produces = MediaType.TEXT_PLAIN_VALUE)
     public String getColorHex(){
         return "ffa500";
     }
-
 
 }

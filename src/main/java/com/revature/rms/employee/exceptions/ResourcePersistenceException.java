@@ -1,6 +1,6 @@
 package com.revature.rms.employee.exceptions;
 
-public class ResourcePersistenceException extends QuizzardException {
+public class ResourcePersistenceException extends RuntimeException {
 
     public ResourcePersistenceException() {
         super("Resource could not be persisted!");
