@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+// TODO Convert this class into an embeddable that can be included in any resource class
 @Entity
 public class ResourceMetadata {
 

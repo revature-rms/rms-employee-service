@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
+// TODO Delete this class, resource metadata should be considered as a part of a persistent resource entity
 @Service
 public class ResourceMetadataService {
 

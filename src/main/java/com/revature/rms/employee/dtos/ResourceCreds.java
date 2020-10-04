@@ -1,5 +1,7 @@
 package com.revature.rms.employee.dtos;
 
+// TODO this class should be renamed to "ResourceMetadataDto"
+// TODO this should include the resource creation time and the last modified time
 public class ResourceCreds {
     private int resourceCreator;
     private int lastModifier;

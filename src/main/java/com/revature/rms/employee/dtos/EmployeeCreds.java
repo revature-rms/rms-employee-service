@@ -2,6 +2,7 @@ package com.revature.rms.employee.dtos;
 
 import com.revature.rms.employee.entities.Department;
 
+// TODO rename this class to "EmployeeDto"
 public class EmployeeCreds {
     private int id;
     private String firstName;

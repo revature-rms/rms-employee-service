@@ -5,6 +5,7 @@ import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+// TODO Delete this class, resource metadata should be considered as a part of a persistent resource entity
 @Repository
 public interface ResourceMetadataRepository extends CrudRepository<ResourceMetadata,Integer> {
 
