@@ -9,6 +9,7 @@ import com.revature.rms.employee.exceptions.BadRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
 import com.revature.rms.employee.repositories.ResourceMetadataRepository;
+import jdk.jfr.internal.MetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,14 +23,16 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
 
-    @Autowired
-    public EmployeeService(EmployeeRepository repo) {
-        super();
-        this.employeeRepository = repo;
-    }
+    private ResourceMetadataRepository metadataRepository;
 
     @Autowired
-    private ResourceMetadataRepository metadataRepository;
+    public EmployeeService(EmployeeRepository repo, ResourceMetadataRepository metadataRepository) {
+        super();
+        this.employeeRepository = repo;
+        this.metadataRepository = metadataRepository;
+    }
+
+
 
     /**
      * getEmployeeById method: Returns an employee object when the id int matches a record in the database.
