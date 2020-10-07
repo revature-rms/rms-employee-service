@@ -7,6 +7,7 @@ import com.revature.rms.employee.entities.ResourceMetadata;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.services.EmployeeService;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +33,10 @@ public class EmployeeControllerTest {
     private EmployeeService employeeService;
     private Department department;
 
+
+    /**
+     * tests getAllEmployees by having mockito return a valid employee
+     */
     @Test
     public void testFindAllEmployeesWithValidEmployee(){
         Employee testEmployee = new Employee("Steven", "Kelsey",
@@ -39,9 +44,12 @@ public class EmployeeControllerTest {
                 department, new ResourceMetadata());
         List<Employee> testEmployeeList = Arrays.asList(testEmployee);
         when(employeeService.getall()).thenReturn(testEmployeeList);
-        assertEquals(employeeController.getAllEmployees(), testEmployeeList);
+        assertEquals(testEmployeeList, employeeController.getAllEmployees());
     }
 
+    /**
+     * tests getAllEmployees if mockito returns an empty list
+     */
     @Test
     public void testFindAllEmployeesWithNoEmployee() {
         List<Employee> testEmployeeList = Collections.emptyList();
@@ -49,6 +57,9 @@ public class EmployeeControllerTest {
         assertEquals(employeeController.getAllEmployees(), testEmployeeList);
     }
 
+    /**
+     * tests getEmployeeById by having mockito return a valid employee and giving it a valid id
+     */
     @Test
     public void testGetEmployeeByValidId() {
         int id = 1;
@@ -60,18 +71,9 @@ public class EmployeeControllerTest {
         assertEquals(employeeController.getEmployeeById(id), expectedResult);
     }
 
-    @Test
-    public void testGetEmployeeByValidFirstName() {
-        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
-                "steven.kelsey@revature.com", "Manager of Technology",
-                department);
-        Employee expectedResult = new Employee("Steven", "Kelsey",
-                "steven.kelsey@revature.com", "Manager of Technology",
-                department);
-        when(employeeService.findByFirstname("Steven")).thenReturn(expectedResult);
-        assertEquals(employeeController.getByfirstname(testEmployee), expectedResult);
-    }
-
+    /**
+     * tests getEmployeeById if the employee is not found by throwing a ResourceNotFoundException
+     */
     @Test(expected = ResourceNotFoundException.class)
     public void testGetEmployeeByNotFoundId() {
         int id = 1;
@@ -80,6 +82,9 @@ public class EmployeeControllerTest {
         employeeController.getEmployeeById(id);
     }
 
+    /**
+     * tests getEmployeesById by giving a set of ids and returning through mockito a set of employees
+     */
     @Test
     public void testGetEmployeesByValidIds() {
         Employee expectedResult = new Employee("Steven", "Kelsey",
@@ -93,20 +98,57 @@ public class EmployeeControllerTest {
         assertEquals(employeeController.getEmployeesById(ids), actualResult);
     }
 
+    /**
+     * tests addNewEmployeeWithResource by having it return an employee when it gets an employeeCreds and an id
+     */
     @Test
-    @Ignore
-    public void testGetAllEmployeesByValidId() {
-        Employee expectedResult = new Employee("Steven", "Kelsey",
-                "steven.kelsey@revature.com","Manager of Technology",
-                department, new ResourceMetadata());
-        when(employeeService.getEmployeeById(anyInt())).thenReturn(expectedResult);
-        List<Employee> actualResult = new ArrayList<>();
-        actualResult.add(expectedResult);
-        List<Integer>  ids = new ArrayList<>();
-        ids.add(1);
-        assertEquals(employeeController.getAllEmployees(), actualResult);
+    public void testAddNewEmployeeWithResource(){
+        Employee employee = new Employee(1,"Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
+                department, new ResourceMetadata(1, "test", 1, "test", 1, true));
+        EmployeeCreds employeeCreds = new EmployeeCreds("Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
+                Department.HR);
+        when(employeeService.addEmployee(employeeCreds, 1)).thenReturn(employee);
+        Assert.assertEquals(employee, employeeController.addNewEmployeeWithResource(employeeCreds,1));
     }
 
+    /**
+     * tests getByFirstName by giving an employeeCred and getting an employee back
+     */
+    @Test
+    public void testGetEmployeeByValidFirstName() {
+        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
+                department);
+        Employee expectedResult = new Employee("Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
+                department);
+        when(employeeService.findByFirstname("Steven")).thenReturn(expectedResult);
+        assertEquals(employeeController.getByfirstname(testEmployee), expectedResult);
+    }
+
+
+    /**
+     * tests getAllEmployees by having mockito return a list of employees
+     */
+
+    @Test
+    public void testGetAllEmployees() {
+        Employee expectedEmployee = new Employee("Steven", "Kelsey",
+                "steven.kelsey@revature.com","Manager of Technology",
+                department, new ResourceMetadata());
+        List<Employee> expectedResult = new ArrayList<>();
+        expectedResult.add(expectedEmployee);
+        List<Integer>  ids = new ArrayList<>();
+        ids.add(1);
+        when(employeeService.getall()).thenReturn(expectedResult);
+        assertEquals(expectedResult, employeeController.getAllEmployees());
+    }
+
+    /**
+     * tests getEmployeeId with an invalid id number and returning a null employee
+     */
     @Test
     public void testGetEmployeeWithInvalidEmployee() {
         int id = 0;
@@ -114,6 +156,9 @@ public class EmployeeControllerTest {
         assertEquals(employeeController.getEmployeeById(id), null);
     }
 
+    /**
+     * tests addNewEmployee by having mockito return an employee through employeeService.addEmployee
+     */
     @Test
     public void testAddNewEmployeeWithValidEmployee() {
         EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
@@ -126,6 +171,9 @@ public class EmployeeControllerTest {
         assertEquals(employeeController.addNewEmployee(testEmployee, 1), persistedEmployee);
     }
 
+    /**
+     * tests updateEmployee by having mockito return an employee through employeeService.update
+     */
     @Test
     public void testAddNewEmployeeWithResourcesWithValidEmployee() {
         EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
@@ -138,6 +186,9 @@ public class EmployeeControllerTest {
         assertEquals(employeeController.updateEmployee(testEmployee, 1), persistedEmployee);
     }
 
+    /**
+     * tests delete employee with a valid id
+     */
     @Test
     public void testDeleteEmployeeWithValidId() {
         int id = 1;
@@ -146,6 +197,9 @@ public class EmployeeControllerTest {
         verify(employeeService, times(1)).delete(id);
     }
 
+    /**
+     * tests delete employee with an invalid id and having it throw an InvalidRequestException
+     */
     @Test(expected = InvalidRequestException.class)
     public void testDeleteEmployeeWithInvalidId() {
         Employee testEmployee = new Employee("Steven", "Kelsey",
@@ -155,6 +209,30 @@ public class EmployeeControllerTest {
         when(employeeService.getEmployeeById(testId)).thenReturn((testEmployee));
         employeeController.deleteEmployeeById(testId);
         verify(employeeService, times(0)).delete(testId);
+    }
+
+    /**
+     * tests getAllById by creating a list of ids and lists of employees and having mockito return one employee at a time
+     * then asserting equals the list of employees with the list returned
+     */
+
+    @Test
+    public void testGetAllById(){
+        List<Integer> ids = new ArrayList<>();
+        ids.add(1);
+        ids.add(2);
+        List<Employee> employees = new ArrayList<>();
+        Employee employee1 = new Employee(1,"Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
+                department, new ResourceMetadata(1,1,1));
+        employees.add(employee1);
+        Employee employee2 = new Employee(2, "test", "test",
+                "test", "test",
+                department, new ResourceMetadata(1, 1, 1));
+        employees.add(employee2);
+        when(employeeService.getEmployeeById(1)).thenReturn(employee1);
+        when(employeeService.getEmployeeById(2)).thenReturn(employee2);
+        Assert.assertEquals(employees, employeeController.getAllById(ids));
     }
 
 }

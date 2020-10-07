@@ -22,14 +22,16 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
 
-    @Autowired
-    public EmployeeService(EmployeeRepository repo) {
-        super();
-        this.employeeRepository = repo;
-    }
+    private ResourceMetadataRepository metadataRepository;
 
     @Autowired
-    private ResourceMetadataRepository metadataRepository;
+    public EmployeeService(EmployeeRepository repo, ResourceMetadataRepository metadataRepository) {
+        super();
+        this.employeeRepository = repo;
+        this.metadataRepository = metadataRepository;
+    }
+
+
 
     /**
      * getEmployeeById method: Returns an employee object when the id int matches a record in the database.
