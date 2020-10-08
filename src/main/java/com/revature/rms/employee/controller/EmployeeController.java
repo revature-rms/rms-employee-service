@@ -120,7 +120,7 @@ public class EmployeeController {
      * @param String firstName object
      * @return an employee with matching firstName
      */
-    @GetMapping(value = "/getbyfirstname", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getbyfirstname", produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getByFirstName(@RequestParam @Valid String firstName) {
 
         return employeeService.findByFirstname(firstName);
@@ -130,7 +130,7 @@ public class EmployeeController {
      * getAllEmployees method: Returns a list of all the employee objects in the database.
      * @return a list of all the employees
      */
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllEmployees() {
         return employeeService.getall();
     }
@@ -139,7 +139,7 @@ public class EmployeeController {
      * deleteEmployeeById method: Deletes an employee object based on its id int
      * @param id employeeId int value
      */
-    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}")
     public void deleteEmployeeById(@PathVariable int id) {
         if (id <= 0) {
             throw new InvalidRequestException();
