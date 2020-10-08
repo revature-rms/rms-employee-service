@@ -9,15 +9,12 @@ import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
 import com.revature.rms.employee.repositories.ResourceMetadataRepository;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.autoconfigure.ldap.embedded.EmbeddedLdapAutoConfiguration;
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
@@ -51,7 +48,7 @@ public class EmployeeServiceTest {
         //Act
         when(employeeRepository.findAll()).thenReturn(mockEmployeeList);
         //Assert
-        assertEquals(mockEmployeeList, employeeService.getall());
+        assertEquals(mockEmployeeList, employeeService.getAll());
     }
 
     /**
@@ -73,7 +70,7 @@ public class EmployeeServiceTest {
     /**
      * tests findEmployeeByOwnerId to see if it throws a BadRequestException if given an invalid id number
      */
-    @Test(expected = BadRequestException.class)
+    @Test(expected = InvalidRequestException.class)
     public void testFindEmployeeByOwnerIdBad(){
         employeeService.findEmployeeByOwnerId(0);
     }
