@@ -2,7 +2,6 @@ package com.revature.rms.employee.controller;
 
 import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Employee;
-import com.revature.rms.employee.entities.ResourceMetadata;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.services.EmployeeService;
 import com.revature.rms.employee.services.ResourceMetadataService;
@@ -11,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -132,7 +130,7 @@ public class EmployeeController {
      */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllEmployees() {
-        return employeeService.getall();
+        return employeeService.getAll();
     }
 
     /**
