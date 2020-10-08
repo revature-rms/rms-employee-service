@@ -120,7 +120,7 @@ public class EmployeeController {
      * @param String firstName object
      * @return an employee with matching firstName
      */
-    @GetMapping(value = "/getbyfirstname", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/firstname", produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getByFirstName(@RequestParam @Valid String firstName) {
 
         return employeeService.findByFirstname(firstName);
