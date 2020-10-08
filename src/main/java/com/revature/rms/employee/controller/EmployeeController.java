@@ -5,7 +5,6 @@ import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.employee.entities.ResourceMetadata;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.services.EmployeeService;
-import com.revature.rms.employee.services.ResourceMetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +20,10 @@ import java.util.Set;
 public class EmployeeController {
 
     private EmployeeService employeeService;
-    private ResourceMetadataService service;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService,ResourceMetadataService service) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.service =service;
     }
 
     /**

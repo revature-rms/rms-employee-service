@@ -8,8 +8,6 @@ import com.revature.rms.employee.exceptions.BadRequestException;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
-import com.revature.rms.employee.repositories.ResourceMetadataRepository;
-import jdk.jfr.internal.MetadataRepository;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,8 +31,6 @@ public class EmployeeServiceTest {
     @Mock
     EmployeeRepository employeeRepository;
     Department department;
-    @Mock
-    ResourceMetadataRepository metadataRepository;
     @InjectMocks
     EmployeeService employeeService;
 
@@ -143,7 +139,6 @@ public class EmployeeServiceTest {
                 Department.HR, new ResourceMetadata(1, "test", 1, "test", 1, true));
         Employee testEmployee = new Employee(testEmployeeCreds);
         //Act
-        when(metadataRepository.save(any())).thenReturn(new ResourceMetadata(1, "test", 1, "test", 1, true));
         when(employeeRepository.findById(1)).thenReturn(expectedResult);
         when(employeeRepository.save(any())).thenReturn(expectedResult);
         Employee actualResult = employeeService.update(testEmployeeCreds,1);

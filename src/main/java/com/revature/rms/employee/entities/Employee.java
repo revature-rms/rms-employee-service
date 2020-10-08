@@ -37,10 +37,7 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private Department department;
 
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @Embedded
     private ResourceMetadata resourceMetadata;
 
 
