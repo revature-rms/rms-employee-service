@@ -41,7 +41,7 @@ public class EmployeeControllerIntegrationTest {
      */
     @Test
     public void testGetAllEmployeesWithExistingEmployeesExpecting200() throws Exception {
-        this.mockMvc.perform(get("/employee/employees").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        this.mockMvc.perform(get("/employees").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 }
