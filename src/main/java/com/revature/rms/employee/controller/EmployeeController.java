@@ -151,7 +151,7 @@ public class EmployeeController {
      * @return List of employees
      */
 
-    @GetMapping(value = "/owners/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getEmployeesByOwnerId(@PathVariable int id){
         return employeeService.findEmployeeByOwnerId(id);
     }
