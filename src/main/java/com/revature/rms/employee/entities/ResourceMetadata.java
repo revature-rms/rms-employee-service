@@ -5,14 +5,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-// TODO Convert this class into an embeddable that can be included in any resource class
-@Entity
+@Embeddable
 public class ResourceMetadata {
-
-    @Id
-    @Column
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int resourceId;
 
     @Column(nullable=false)
     private int resourceCreator;
@@ -45,16 +39,6 @@ public class ResourceMetadata {
         this.currentlyActive = currentlyActive;
     }
 
-    public ResourceMetadata(int resourceId, int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean currentlyActive) {
-        this.resourceId = resourceId;
-        this.resourceCreator = resourceCreator;
-        this.resourceCreationDateTime = resourceCreationDateTime;
-        this.lastModifier = lastModifier;
-        this.lastModifiedDateTime = lastModifiedDateTime;
-        this.resourceOwner = resourceOwner;
-        this.currentlyActive = currentlyActive;
-    }
-
     public ResourceMetadata(int resourceCreator, int lastModifier, int resourceOwner) {
         this.resourceCreator = resourceCreator;
         this.resourceCreationDateTime = LocalDateTime.now().toString();
@@ -68,14 +52,6 @@ public class ResourceMetadata {
         this.lastModifier = lastModifier;
         this.lastModifiedDateTime = LocalDateTime.now().toString();
         this.resourceOwner = resourceOwner;
-    }
-
-    public int getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(int resourceId) {
-        this.resourceId = resourceId;
     }
 
     public int getResourceCreator() {
@@ -131,8 +107,7 @@ public class ResourceMetadata {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ResourceMetadata that = (ResourceMetadata) o;
-        return resourceId == that.resourceId &&
-                resourceCreator == that.resourceCreator &&
+        return resourceCreator == that.resourceCreator &&
                 lastModifier == that.lastModifier &&
                 resourceOwner == that.resourceOwner &&
                 currentlyActive == that.currentlyActive &&
@@ -142,13 +117,12 @@ public class ResourceMetadata {
 
     @Override
     public int hashCode() {
-        return Objects.hash(resourceId, resourceCreator, resourceCreationDateTime, lastModifier, lastModifiedDateTime, resourceOwner, currentlyActive);
+        return Objects.hash(resourceCreator, resourceCreationDateTime, lastModifier, lastModifiedDateTime, resourceOwner, currentlyActive);
     }
 
     @Override
     public String toString() {
         return "ResourceMetadata{" +
-                "resourceId=" + resourceId +
                 ", resourceCreator=" + resourceCreator +
                 ", resourceCreationDateTime='" + resourceCreationDateTime + '\'' +
                 ", lastModifier=" + lastModifier +
