@@ -6,7 +6,6 @@ import com.revature.rms.employee.entities.ResourceMetadata;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
-import com.revature.rms.employee.repositories.ResourceMetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +19,10 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
 
-    private ResourceMetadataRepository metadataRepository;
-
     @Autowired
-    public EmployeeService(EmployeeRepository repo, ResourceMetadataRepository metadataRepository) {
+    public EmployeeService(EmployeeRepository repo) {
         super();
         this.employeeRepository = repo;
-        this.metadataRepository = metadataRepository;
     }
 
 
@@ -96,7 +92,6 @@ public class EmployeeService {
         ResourceMetadata metadata = oldEmp.getResourceMetadata();
         metadata.setLastModifier(id);
         metadata.setLastModifiedDateTime(LocalDateTime.now().toString());
-        metadataRepository.save(metadata);
         emp.setResourceMetadata(metadata);
 
         return employeeRepository.save(emp);
@@ -117,9 +112,6 @@ public class EmployeeService {
             throw new InvalidRequestException("A new Employee must be entered in order for a new Employee to be saved");
         }
         Employee employee = new Employee(newEmployee);
-        ResourceMetadata metadata = new ResourceMetadata(id, id, id);
-        metadataRepository.save(metadata);
-        employee.setResourceMetadata(metadata);
 
         return employeeRepository.save(employee);
     }
