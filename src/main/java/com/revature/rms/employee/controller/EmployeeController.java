@@ -2,7 +2,6 @@ package com.revature.rms.employee.controller;
 
 import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Employee;
-import com.revature.rms.employee.entities.ResourceMetadata;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -117,7 +115,7 @@ public class EmployeeController {
      * @param String firstName object
      * @return an employee with matching firstName
      */
-    @GetMapping(value = "/getbyfirstname", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/firstname", produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getByFirstName(@RequestParam @Valid String firstName) {
 
         return employeeService.findByFirstname(firstName);
@@ -129,7 +127,7 @@ public class EmployeeController {
      */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllEmployees() {
-        return employeeService.getall();
+        return employeeService.getAll();
     }
 
     /**
@@ -150,7 +148,7 @@ public class EmployeeController {
      * @return List of employees
      */
 
-    @GetMapping(value = "/owners/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getEmployeesByOwnerId(@PathVariable int id){
         return employeeService.findEmployeeByOwnerId(id);
     }

@@ -7,7 +7,6 @@ import com.revature.rms.employee.entities.ResourceMetadata;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.services.EmployeeService;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -42,7 +41,7 @@ public class EmployeeControllerTest {
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department, new ResourceMetadata());
         List<Employee> testEmployeeList = Arrays.asList(testEmployee);
-        when(employeeService.getall()).thenReturn(testEmployeeList);
+        when(employeeService.getAll()).thenReturn(testEmployeeList);
         assertEquals(testEmployeeList, employeeController.getAllEmployees());
     }
 
@@ -52,7 +51,7 @@ public class EmployeeControllerTest {
     @Test
     public void testFindAllEmployeesWithNoEmployee() {
         List<Employee> testEmployeeList = Collections.emptyList();
-        when(employeeService.getall()).thenReturn(testEmployeeList);
+        when(employeeService.getAll()).thenReturn(testEmployeeList);
         assertEquals(employeeController.getAllEmployees(), testEmployeeList);
     }
 
@@ -142,7 +141,7 @@ public class EmployeeControllerTest {
         expectedResult.add(expectedEmployee);
         List<Integer>  ids = new ArrayList<>();
         ids.add(1);
-        when(employeeService.getall()).thenReturn(expectedResult);
+        when(employeeService.getAll()).thenReturn(expectedResult);
         assertEquals(expectedResult, employeeController.getAllEmployees());
     }
 

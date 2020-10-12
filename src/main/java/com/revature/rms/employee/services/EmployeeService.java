@@ -1,11 +1,9 @@
 package com.revature.rms.employee.services;
 
-import com.netflix.discovery.converters.Auto;
 import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.employee.entities.ResourceMetadata;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
-import com.revature.rms.employee.exceptions.BadRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +35,14 @@ public class EmployeeService {
      */
     @Transactional(readOnly = true)
     public Employee getEmployeeById(int id) throws ResourceNotFoundException{
-        return employeeRepository.findById(id);
+        if (id < 1){
+            throw new InvalidRequestException("Id number can not be below 1");
+        }
+        Employee employee = employeeRepository.findById(id);
+        if (employee == null){
+            throw new ResourceNotFoundException("No Employee found with the id of: " + id);
+        }
+        return employee;
     }
 
     /**
@@ -49,12 +54,12 @@ public class EmployeeService {
     public List<Employee> findEmployeeByOwnerId(int id){
 
         if(id < 1){
-            throw new BadRequestException();
+            throw new InvalidRequestException("Id number can not be below 1");
         }
 
         Iterable<Employee> allEmps = employeeRepository.findAll();
 
-        List<Employee> emps = new ArrayList<Employee>();
+        List<Employee> emps = new ArrayList<>();
 
         for(Employee emp : allEmps){
             ResourceMetadata data = emp.getResourceMetadata();
@@ -64,7 +69,7 @@ public class EmployeeService {
         }
 
         if(emps.isEmpty()){
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("No Employees found with the Owner id of: " + id);
         }
 
         return emps;
@@ -81,6 +86,13 @@ public class EmployeeService {
     public Employee update(EmployeeCreds updatedEmp, int id) {
         Employee emp = new Employee(updatedEmp);
         Employee oldEmp = employeeRepository.findById(emp.getId());
+        if (oldEmp == null){
+            throw new ResourceNotFoundException("No Employee exists with id of:" + updatedEmp.getId());
+        }
+        ResourceMetadata metadata = oldEmp.getResourceMetadata();
+        metadata.setLastModifier(id);
+        metadata.setLastModifiedDateTime(LocalDateTime.now().toString());
+        emp.setResourceMetadata(metadata);
 
         return employeeRepository.save(emp);
     }
@@ -88,7 +100,7 @@ public class EmployeeService {
     /**
      * addEmployee method: Takes in a employee object as the input. The input employee
      * object is tested to ensure that it is not null. If the employee object
-     * is null then it will throw a ResourceNotFoundException.
+     * is null then it will throw a Invalid Request Exception.
      * Once the employee object passes the test it is then added or persisted
      * to the database.
      * @param newEmployee newly persisted employee object
@@ -97,7 +109,7 @@ public class EmployeeService {
     @Transactional
     public Employee addEmployee(EmployeeCreds newEmployee, int id) {
         if(newEmployee == null){
-            throw new ResourceNotFoundException();
+            throw new InvalidRequestException("A new Employee must be entered in order for a new Employee to be saved");
         }
         Employee employee = new Employee(newEmployee);
 
@@ -112,7 +124,11 @@ public class EmployeeService {
      */
     @Transactional(readOnly = true)
     public Employee findByFirstname(String name) throws ResourceNotFoundException{
-        return employeeRepository.findByFirstName(name);
+        Employee employee = employeeRepository.findByFirstName(name);
+        if (employee == null){
+            throw new ResourceNotFoundException("No Employee found with first name: " + name);
+        }
+        return employee;
 
     }
 
@@ -122,9 +138,12 @@ public class EmployeeService {
      * @throws ResourceNotFoundException when no employees are found
      */
     @Transactional(readOnly = true)
-    public List<Employee> getall() throws ResourceNotFoundException{
+    public List<Employee> getAll() throws ResourceNotFoundException{
         Iterable<Employee> e = employeeRepository.findAll();
         List<Employee> list = getListFromIterator(e);
+        if (list.isEmpty()){
+            throw new ResourceNotFoundException("No Employees Found!");
+        }
         return list;
     }
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
@@ -141,7 +160,7 @@ public class EmployeeService {
     @Transactional
     public void delete(int id) {
         if (id <= 0) {
-            throw new InvalidRequestException();
+            throw new InvalidRequestException("Id number can not be below 0");
         }
         employeeRepository.deleteById(id);
     }
