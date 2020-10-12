@@ -14,6 +14,23 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Uses the EmployeeRepository
+ *
+ * Methods:
+ *      Constructor:
+ *          public EmployeeService(EmployeeRepository repo)
+ *
+ *      public Employee getEmployeeById(int id) throws ResourceNotFoundException
+ *      public List<Employee> findEmployeeByOwnerId(int id)
+ *      public Employee update(EmployeeCreds updatedEmp, int id)
+ *      public Employee addEmployee(EmployeeCreds newEmployee, int id)
+ *      public Employee findByFirstname(String name) throws ResourceNotFoundException
+ *      public List<Employee> getAll() throws ResourceNotFoundException
+ *      public static <T> List<T> getListFromIterator(Iterable<T> iterable)
+ *      public void delete(int id)
+ *
+ */
 @Service
 public class EmployeeService {
 
@@ -24,8 +41,6 @@ public class EmployeeService {
         super();
         this.employeeRepository = repo;
     }
-
-
 
     /**
      * getEmployeeById method: Returns an employee object when the id int matches a record in the database.

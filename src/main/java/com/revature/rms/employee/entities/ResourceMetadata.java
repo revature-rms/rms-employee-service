@@ -12,19 +12,19 @@ public class ResourceMetadata {
     private int resourceCreator;
 
     @Column(nullable=false)
-    private String resourceCreationDateTime;
+    private String resourceCreationDateTime = LocalDateTime.now().toString();
 
     @Column(nullable=false)
     private int lastModifier;
 
     @Column(nullable=false)
-    private String lastModifiedDateTime;
+    private String lastModifiedDateTime = LocalDateTime.now().toString();
 
     @Column(nullable=false)
     private int resourceOwner;
 
     @Column
-    private boolean currentlyActive;
+    private boolean currentlyActive = true;
 
     public ResourceMetadata() {
         super();
