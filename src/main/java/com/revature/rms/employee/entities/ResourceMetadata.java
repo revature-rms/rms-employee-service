@@ -24,7 +24,7 @@ public class ResourceMetadata {
     private int resourceOwner;
 
     @Column
-    private boolean currentlyActive;
+    private boolean currentlyActive = true;
 
     public ResourceMetadata() {
         super();
