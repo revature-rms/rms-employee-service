@@ -38,10 +38,11 @@ public class Employee {
     private Department department;
 
     @Embedded
-    private ResourceMetadata resourceMetadata;
+    private ResourceMetadata resourceMetadata = new ResourceMetadata();;
 
 
-    public Employee() {super();
+    public Employee() {
+        super();
     }
 
     public Employee(String firstName) {
