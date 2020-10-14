@@ -31,7 +31,7 @@ public class EmployeeController {
      */
     @GetMapping(value="/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getEmployeeById(@PathVariable int id) {
-        return employeeService.getEmployeeById(id);
+        return employeeService.findById(id);
     }
 
     /**
@@ -43,7 +43,7 @@ public class EmployeeController {
     public Set<Employee> getEmployeesByIds(@PathVariable @RequestBody Set<Integer> ids){
         Set<Employee> employees = new HashSet<>();
         for (int s : ids) {
-            employees.add(employeeService.getEmployeeById(s));
+            employees.add(employeeService.findById(s));
         }
         return employees;
     }
@@ -68,7 +68,7 @@ public class EmployeeController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee addNewEmployee(@RequestBody @Valid EmployeeCreds employee,
                                    @RequestHeader(value = "Authorization") int id) {
-        return employeeService.addEmployee(employee, id);
+        return employeeService.save(employee, id);
     }
 
     /**
@@ -127,7 +127,7 @@ public class EmployeeController {
      */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllEmployees() {
-        return employeeService.getAll();
+        return employeeService.findAll();
     }
 
     /**
@@ -150,7 +150,7 @@ public class EmployeeController {
 
     @GetMapping(value = "/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getEmployeesByOwnerId(@PathVariable int id){
-        return employeeService.findEmployeeByOwnerId(id);
+        return employeeService.findByOwnerId(id);
     }
 
     /**

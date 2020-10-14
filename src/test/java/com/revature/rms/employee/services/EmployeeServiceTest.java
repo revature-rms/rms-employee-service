@@ -4,7 +4,6 @@ import com.revature.rms.employee.dtos.EmployeeCreds;
 import com.revature.rms.employee.entities.Department;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.employee.entities.ResourceMetadata;
-import com.revature.rms.employee.exceptions.BadRequestException;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
@@ -45,7 +44,7 @@ public class EmployeeServiceTest {
         //Act
         when(employeeRepository.findAll()).thenReturn(mockEmployeeList);
         //Assert
-        assertEquals(mockEmployeeList, employeeService.getAll());
+        assertEquals(mockEmployeeList, employeeService.findAll());
     }
 
     /**
@@ -59,7 +58,7 @@ public class EmployeeServiceTest {
                 department, new ResourceMetadata());
         //Act
         when(employeeRepository.findById(1)).thenReturn(expectedEmployee);
-        Employee actualEmployee = employeeService.getEmployeeById(1);
+        Employee actualEmployee = employeeService.findById(1);
         //Assert
         assertEquals(actualEmployee, expectedEmployee);
     }
@@ -69,7 +68,7 @@ public class EmployeeServiceTest {
      */
     @Test(expected = InvalidRequestException.class)
     public void testFindEmployeeByOwnerIdBad(){
-        employeeService.findEmployeeByOwnerId(0);
+        employeeService.findByOwnerId(0);
     }
 
     /**
@@ -83,7 +82,7 @@ public class EmployeeServiceTest {
         List<Employee> employees = new ArrayList<>();
         employees.add(differentEmployee);
         when(employeeRepository.findAll()).thenReturn(employees);
-        employeeService.findEmployeeByOwnerId(2);
+        employeeService.findByOwnerId(2);
     }
     /**
      * testGetEmployeeByOwnerId EmployeeService().findEmployeeByOwnerId() returns an existing Employee object.
@@ -99,7 +98,7 @@ public class EmployeeServiceTest {
         expectedEmployees.add(expectedEmployee);
 
         when(employeeRepository.findAll()).thenReturn(expectedEmployees);
-        List<Employee> actualEmployees = employeeService.findEmployeeByOwnerId(1);
+        List<Employee> actualEmployees = employeeService.findByOwnerId(1);
         //Assert
         assertEquals(expectedEmployees, actualEmployees);
     }
@@ -159,7 +158,7 @@ public class EmployeeServiceTest {
         //Act
 
         when(employeeRepository.save(Mockito.any())).thenReturn(expectedResult);
-        Employee actualResult = employeeService.addEmployee(testEmployee, 1);
+        Employee actualResult = employeeService.save(testEmployee, 1);
         //Assert
         assertEquals(expectedResult, actualResult);
     }
