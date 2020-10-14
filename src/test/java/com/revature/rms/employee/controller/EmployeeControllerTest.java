@@ -41,7 +41,7 @@ public class EmployeeControllerTest {
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department, new ResourceMetadata());
         List<Employee> testEmployeeList = Arrays.asList(testEmployee);
-        when(employeeService.getAll()).thenReturn(testEmployeeList);
+        when(employeeService.findAll()).thenReturn(testEmployeeList);
         assertEquals(testEmployeeList, employeeController.getAllEmployees());
     }
 
@@ -51,7 +51,7 @@ public class EmployeeControllerTest {
     @Test
     public void testFindAllEmployeesWithNoEmployee() {
         List<Employee> testEmployeeList = Collections.emptyList();
-        when(employeeService.getAll()).thenReturn(testEmployeeList);
+        when(employeeService.findAll()).thenReturn(testEmployeeList);
         assertEquals(employeeController.getAllEmployees(), testEmployeeList);
     }
 
@@ -65,7 +65,7 @@ public class EmployeeControllerTest {
         Employee expectedResult = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com","Manager of Technology",
                 department, new ResourceMetadata());
-        when(employeeService.getEmployeeById(1)).thenReturn(expectedResult);
+        when(employeeService.findById(1)).thenReturn(expectedResult);
         assertEquals(employeeController.getEmployeeById(id), expectedResult);
     }
 
@@ -76,7 +76,7 @@ public class EmployeeControllerTest {
     public void testGetEmployeeByNotFoundId() {
         int id = 1;
 
-        when(employeeService.getEmployeeById(1)).thenThrow(new ResourceNotFoundException());
+        when(employeeService.findById(1)).thenThrow(new ResourceNotFoundException());
         employeeController.getEmployeeById(id);
     }
 
@@ -88,7 +88,7 @@ public class EmployeeControllerTest {
         Employee expectedResult = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com","Manager of Technology",
                 department, new ResourceMetadata());
-        when(employeeService.getEmployeeById(anyInt())).thenReturn(expectedResult);
+        when(employeeService.findById(anyInt())).thenReturn(expectedResult);
         Set<Employee> actualResult = new HashSet<>();
         actualResult.add(expectedResult);
         Set<Integer>  ids = new HashSet<>();
@@ -141,7 +141,7 @@ public class EmployeeControllerTest {
         expectedResult.add(expectedEmployee);
         List<Integer>  ids = new ArrayList<>();
         ids.add(1);
-        when(employeeService.getAll()).thenReturn(expectedResult);
+        when(employeeService.findAll()).thenReturn(expectedResult);
         assertEquals(expectedResult, employeeController.getAllEmployees());
     }
 
@@ -151,7 +151,7 @@ public class EmployeeControllerTest {
     @Test
     public void testGetEmployeeWithInvalidEmployee() {
         int id = 0;
-        when(employeeService.getEmployeeById(id)).thenReturn(null);
+        when(employeeService.findById(id)).thenReturn(null);
         assertEquals(employeeController.getEmployeeById(id), null);
     }
 
@@ -166,7 +166,7 @@ public class EmployeeControllerTest {
         Employee persistedEmployee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
-        when(employeeService.addEmployee(testEmployee,1)).thenReturn(persistedEmployee);
+        when(employeeService.save(testEmployee,1)).thenReturn(persistedEmployee);
         assertEquals(employeeController.addNewEmployee(testEmployee, 1), persistedEmployee);
     }
 
@@ -205,7 +205,7 @@ public class EmployeeControllerTest {
                 "steven.kelsey@revature.com","Manager of Technology",
                 department);
                 int testId = -1;
-        when(employeeService.getEmployeeById(testId)).thenReturn((testEmployee));
+        when(employeeService.findById(testId)).thenReturn((testEmployee));
         employeeController.deleteEmployeeById(testId);
         verify(employeeService, times(0)).delete(testId);
     }
