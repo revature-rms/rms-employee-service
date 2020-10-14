@@ -37,6 +37,7 @@ public class EmployeeControllerIntegrationTest {
     /**
      * This ensures Employee.getAllEmployees hits the desired endpoint provided, produces a JSON object retrieved from
      * the database, and returns a status of 200 if everything was successful.
+     * Set to Ignore while refactoring ResourceMetaData to the rms-core repository.
      * @throws Exception from perform()
      */
     @Test

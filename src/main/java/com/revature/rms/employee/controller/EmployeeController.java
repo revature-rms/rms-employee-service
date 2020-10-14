@@ -112,7 +112,7 @@ public class EmployeeController {
 
     /**
      * getByfirstname method: Returns an employee object when the firstName String matches a record in the database.
-     * @param String firstName object
+     * @param firstName object
      * @return an employee with matching firstName
      */
     @GetMapping(value = "/firstname", produces = MediaType.APPLICATION_JSON_VALUE)
