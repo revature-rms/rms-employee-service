@@ -1,7 +1,7 @@
 package com.revature.rms.employee.entities;
 
 import com.revature.rms.core.metadata.*;
-import com.revature.rms.employee.dtos.EmployeeCreds;
+import com.revature.rms.employee.dtos.EmployeeDto;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -82,13 +82,13 @@ public class Employee extends Resource{
         this.setResourceMetadata(resourceMetadata);
     }
 
-    public Employee(EmployeeCreds employeeCreds) {
-        this.id = employeeCreds.getId();
-        this.firstName = employeeCreds.getFirstName();
-        this.lastName = employeeCreds.getLastName();
-        this.email = employeeCreds.getEmail();
-        this.title = employeeCreds.getTitle();
-        this.department = employeeCreds.getDepartment();
+    public Employee(EmployeeDto employeeDto) {
+        this.id = employeeDto.getId();
+        this.firstName = employeeDto.getFirstName();
+        this.lastName = employeeDto.getLastName();
+        this.email = employeeDto.getEmail();
+        this.title = employeeDto.getTitle();
+        this.department = employeeDto.getDepartment();
     }
 
     public int getId() {

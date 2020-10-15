@@ -1,7 +1,7 @@
 package com.revature.rms.employee.services;
 
 import com.revature.rms.core.metadata.ResourceMetadata;
-import com.revature.rms.employee.dtos.EmployeeCreds;
+import com.revature.rms.employee.dtos.EmployeeDto;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.exceptions.ResourceNotFoundException;
@@ -50,7 +50,7 @@ public class EmployeeService {
      * @return the newly added employee object
      */
     @Transactional
-    public Employee save(EmployeeCreds newEmployee, int id) {
+    public Employee save(EmployeeDto newEmployee, int id) {
         if(newEmployee == null){
             throw new InvalidRequestException("New employee cannot be null!");
         }
@@ -151,7 +151,7 @@ public class EmployeeService {
      * @return updated/modified employee object
      */
     @Transactional
-    public Employee update(EmployeeCreds updatedEmp, int id) {
+    public Employee update(EmployeeDto updatedEmp, int id) {
         Employee emp = new Employee(updatedEmp);
         Employee oldEmp = employeeRepository.findById(emp.getId());
         if (oldEmp == null){
