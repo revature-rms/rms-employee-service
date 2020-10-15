@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Component
 @RestControllerAdvice
-public class ExceptionResponseService extends CoreExceptionResponseAspect {
+public class ExceptionResponseAspect extends CoreExceptionResponseAspect {
 }
