@@ -1,6 +1,6 @@
 package com.revature.rms.employee.services;
 
-import com.revature.rms.employee.dtos.EmployeeCreds;
+import com.revature.rms.employee.dtos.EmployeeDto;
 import com.revature.rms.employee.entities.Department;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.core.metadata.ResourceMetadata;
@@ -127,17 +127,17 @@ public class EmployeeServiceTest {
     @Test
     public void testUpdateWithValidEmployee() {
         //Arrange
-        EmployeeCreds testEmployeeCreds = new EmployeeCreds(1,"Steven", "Kelsey",
+        EmployeeDto testEmployeeDto = new EmployeeDto(1,"Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 Department.HR);
         Employee expectedResult = new Employee(1,"Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 Department.HR, new ResourceMetadata(1, "test", 1, "test", 1, true));
-        Employee testEmployee = new Employee(testEmployeeCreds);
+        Employee testEmployee = new Employee(testEmployeeDto);
         //Act
         when(employeeRepository.findById(1)).thenReturn(expectedResult);
         when(employeeRepository.save(any())).thenReturn(expectedResult);
-        Employee actualResult = employeeService.update(testEmployeeCreds,1);
+        Employee actualResult = employeeService.update(testEmployeeDto,1);
         //Assert
         assertEquals(expectedResult, actualResult);
     }
@@ -149,7 +149,7 @@ public class EmployeeServiceTest {
     @Test
     public void testAddEmployeeWithValidEmployee() {
         //Arrange
-        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
+        EmployeeDto testEmployee = new EmployeeDto("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
         Employee expectedResult = new Employee("Steven", "Kelsey",

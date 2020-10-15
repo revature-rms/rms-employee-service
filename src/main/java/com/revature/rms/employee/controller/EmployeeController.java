@@ -1,6 +1,6 @@
 package com.revature.rms.employee.controller;
 
-import com.revature.rms.employee.dtos.EmployeeCreds;
+import com.revature.rms.employee.dtos.EmployeeDto;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.employee.exceptions.InvalidRequestException;
 import com.revature.rms.employee.services.EmployeeService;
@@ -47,18 +47,6 @@ public class EmployeeController {
         }
         return employees;
     }
-    // same method as addNewEmployee
-//    /**
-////     * addNewEmployeeWithResource method: Takes in a employee object as the input, along with a resourceId.
-////     * @param employee employeeCreds DTO object
-////     * @return the newly added employee object
-////     */
-////    @PostMapping(value = "/add2", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-////    public Employee addNewEmployeeWithResource(@RequestBody @Valid EmployeeCreds employee,
-////                                               @RequestHeader(value = "Authorization") int id) {
-////
-////        return employeeService.addEmployee(employee, id);
-////    }
 
     /**
      * addEmployee method: Takes in a employee object as the input.
@@ -66,7 +54,7 @@ public class EmployeeController {
      * @return the newly added employee object
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee addNewEmployee(@RequestBody @Valid EmployeeCreds employee,
+    public Employee addNewEmployee(@RequestBody @Valid EmployeeDto employee,
                                    @RequestHeader(value = "Authorization") int id) {
         return employeeService.save(employee, id);
     }
@@ -77,38 +65,10 @@ public class EmployeeController {
      * @return updated/modified employee object
      */
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee updateEmployee(@RequestBody @Valid EmployeeCreds employee,
+    public Employee updateEmployee(@RequestBody @Valid EmployeeDto employee,
                                    @RequestHeader(value = "Authorization") int id) {
         return employeeService.update(employee, id);
     }
-
-    // duplicate method, we'd rather have the one that returns a set
-//    /**
-//     * getAllById method:
-//     * @param ids employeeId int values
-//     * @return a set of employees with matching ids
-//     */
-//    @GetMapping (value = "/getallbyid", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Employee> getAllById (@RequestParam List<Integer> ids){
-//        List<Employee> employees = new ArrayList<>();
-//        for (int s : ids) {
-//            employees.add(employeeService.getEmployeeById(s));
-//        }
-//        return employees;
-//    }
-
-//    not used, may get rid of because of confusing mapping (its also already a method with just a id param)
-//    /**
-//     * getByid method: Returns an employee object when the id int matches a record in the database.
-//     * @param employee employeeCreds DTO object
-//     * @return an employee with matching id
-//     */
-//    @PostMapping(value = "/getbyid", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public Employee getByid(@RequestBody @Valid EmployeeCreds employee) {
-//        int id = employee.getId();
-//
-//        return employeeService.getEmployeeById(id);
-//    }
 
     /**
      * getByfirstname method: Returns an employee object when the firstName String matches a record in the database.

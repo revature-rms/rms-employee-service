@@ -1,6 +1,6 @@
 package com.revature.rms.employee.controller;
 
-import com.revature.rms.employee.dtos.EmployeeCreds;
+import com.revature.rms.employee.dtos.EmployeeDto;
 import com.revature.rms.employee.entities.Department;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.core.metadata.ResourceMetadata;
@@ -95,29 +95,13 @@ public class EmployeeControllerTest {
         ids.add(1);
         assertEquals(employeeController.getEmployeesByIds(ids), actualResult);
     }
-    // method commented out
-//
-//    /**
-//     * tests addNewEmployeeWithResource by having it return an employee when it gets an employeeCreds and an id
-//     */
-//    @Test
-//    public void testAddNewEmployeeWithResource(){
-//        Employee employee = new Employee(1,"Steven", "Kelsey",
-//                "steven.kelsey@revature.com", "Manager of Technology",
-//                department, new ResourceMetadata(1, "test", 1, "test", 1, true));
-//        EmployeeCreds employeeCreds = new EmployeeCreds("Steven", "Kelsey",
-//                "steven.kelsey@revature.com", "Manager of Technology",
-//                Department.HR);
-//        when(employeeService.addEmployee(employeeCreds, 1)).thenReturn(employee);
-//        Assert.assertEquals(employee, employeeController.addNewEmployeeWithResource(employeeCreds,1));
-//    }
 
     /**
      * tests getByFirstName by giving an employeeCred and getting an employee back
      */
     @Test
     public void testGetEmployeeByValidFirstName() {
-        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
+        EmployeeDto testEmployee = new EmployeeDto("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
         Employee expectedResult = new Employee("Steven", "Kelsey",
@@ -160,7 +144,7 @@ public class EmployeeControllerTest {
      */
     @Test
     public void testAddNewEmployeeWithValidEmployee() {
-        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
+        EmployeeDto testEmployee = new EmployeeDto("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
         Employee persistedEmployee = new Employee("Steven", "Kelsey",
@@ -175,7 +159,7 @@ public class EmployeeControllerTest {
      */
     @Test
     public void testAddNewEmployeeWithResourcesWithValidEmployee() {
-        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
+        EmployeeDto testEmployee = new EmployeeDto("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
         Employee persistedEmployee = new Employee("Steven", "Kelsey",
@@ -209,30 +193,5 @@ public class EmployeeControllerTest {
         employeeController.deleteEmployeeById(testId);
         verify(employeeService, times(0)).delete(testId);
     }
-
-    // method commented out
-//    /**
-//     * tests getAllById by creating a list of ids and lists of employees and having mockito return one employee at a time
-//     * then asserting equals the list of employees with the list returned
-//     */
-//
-//    @Test
-//    public void testGetAllById(){
-//        List<Integer> ids = new ArrayList<>();
-//        ids.add(1);
-//        ids.add(2);
-//        List<Employee> employees = new ArrayList<>();
-//        Employee employee1 = new Employee(1,"Steven", "Kelsey",
-//                "steven.kelsey@revature.com", "Manager of Technology",
-//                department, new ResourceMetadata(1,1,1));
-//        employees.add(employee1);
-//        Employee employee2 = new Employee(2, "test", "test",
-//                "test", "test",
-//                department, new ResourceMetadata(1, 1, 1));
-//        employees.add(employee2);
-//        when(employeeService.getEmployeeById(1)).thenReturn(employee1);
-//        when(employeeService.getEmployeeById(2)).thenReturn(employee2);
-//        Assert.assertEquals(employees, employeeController.getAllById(ids));
-//    }
 
 }
