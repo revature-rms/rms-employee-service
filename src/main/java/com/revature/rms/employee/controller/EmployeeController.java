@@ -2,7 +2,7 @@ package com.revature.rms.employee.controller;
 
 import com.revature.rms.employee.dtos.EmployeeDto;
 import com.revature.rms.employee.entities.Employee;
-import com.revature.rms.employee.exceptions.InvalidRequestException;
+import com.revature.rms.core.exceptions.InvalidRequestException;
 import com.revature.rms.employee.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

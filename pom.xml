@@ -42,6 +42,12 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>github</id>
+			<name>RMS Core</name>
+			<url>https://maven.pkg.github.com/revature-rms/rms-core</url>
+			<snapshots><enabled>true</enabled></snapshots>
+		</repository>
 	</repositories>
 
 	<build>
