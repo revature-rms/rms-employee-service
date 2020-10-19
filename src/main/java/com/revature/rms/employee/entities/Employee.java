@@ -10,11 +10,6 @@ import java.util.Objects;
 @Entity
 public class Employee extends Resource{
 
-    @Id
-    @Column
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
-
     @Column(nullable=false)
     private String firstName;
 
@@ -29,9 +24,6 @@ public class Employee extends Resource{
 
     @Enumerated(EnumType.STRING)
     private Department department;
-
-    @Embedded
-    private ResourceMetadata resourceMetadata = new ResourceMetadata();
 
     public Employee() {
         super();
