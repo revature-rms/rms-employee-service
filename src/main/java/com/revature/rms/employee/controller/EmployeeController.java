@@ -7,7 +7,6 @@ import com.revature.rms.employee.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
@@ -20,9 +19,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
+    public EmployeeController(EmployeeService employeeService) {this.employeeService = employeeService;}
 
     /**
      * getEmployeeById method: Returns an employee object when the id int matches a record in the database.
@@ -30,9 +27,7 @@ public class EmployeeController {
      * @return an employee with matching id
      */
     @GetMapping(value="/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee getEmployeeById(@PathVariable int id) {
-        return employeeService.findById(id);
-    }
+    public Employee getEmployeeById(@PathVariable int id) {return employeeService.findById(id);}
 
     /**
      * getEmployeesById method: Returns a set of employee objects when the ids- ints match records in the database.
@@ -76,19 +71,14 @@ public class EmployeeController {
      * @return an employee with matching firstName
      */
     @GetMapping(value = "/firstname", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee getByFirstName(@RequestParam @Valid String firstName) {
-
-        return employeeService.findByFirstname(firstName);
-    }
+    public Employee getByFirstName(@RequestParam @Valid String firstName) {return employeeService.findByFirstname(firstName);}
 
     /**
      * getAllEmployees method: Returns a list of all the employee objects in the database.
      * @return a list of all the employees
      */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Employee> getAllEmployees() {
-        return employeeService.findAll();
-    }
+    public List<Employee> getAllEmployees() {return employeeService.findAll();}
 
     /**
      * deleteEmployeeById method: Deletes an employee object based on its id int
@@ -107,18 +97,13 @@ public class EmployeeController {
      * @param id Boss' ID
      * @return List of employees
      */
-
     @GetMapping(value = "/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Employee> getEmployeesByOwnerId(@PathVariable int id){
-        return employeeService.findByOwnerId(id);
-    }
+    public List<Employee> getEmployeesByOwnerId(@PathVariable int id){return employeeService.findByOwnerId(id);}
 
     /**
      * test method: test endpoint to ensure controller is working
      * @return String saying "employeeController loaded"
      */
     @GetMapping("/test")
-    public @ResponseBody String test() {
-        return "employeeController loaded";
-    }
+    public @ResponseBody String test() {return "employeeController loaded";}
 }

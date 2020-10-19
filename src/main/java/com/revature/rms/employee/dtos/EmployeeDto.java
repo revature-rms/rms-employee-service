@@ -3,6 +3,7 @@ package com.revature.rms.employee.dtos;
 import com.revature.rms.employee.entities.Department;
 
 public class EmployeeDto {
+
     private int id;
     private String firstName;
     private String lastName;
@@ -19,8 +20,7 @@ public class EmployeeDto {
         this.department = department;
     }
 
-    public EmployeeDto() {super();
-    }
+    public EmployeeDto() {super();}
 
     public EmployeeDto(String firstName, String lastName, String email, String title, Department department) {
         this.firstName = firstName;
