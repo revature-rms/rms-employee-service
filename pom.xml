@@ -42,12 +42,6 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-		<repository>
-			<id>github</id>
-			<name>RMS Core</name>
-			<url>https://maven.pkg.github.com/revature-rms/rms-core</url>
-			<snapshots><enabled>true</enabled></snapshots>
-		</repository>
 	</repositories>
 
 	<build>
@@ -202,7 +196,10 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.8.0</version>
 		</dependency>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9a6bd3f38a6734576b713b5e78af53edc023a2af
 
 		<!--		&lt;!&ndash; JaCoCo extension &ndash;&gt;-->
 
