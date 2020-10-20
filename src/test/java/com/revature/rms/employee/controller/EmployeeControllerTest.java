@@ -165,8 +165,8 @@ public class EmployeeControllerTest {
         Employee persistedEmployee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
-        when(employeeService.update(testEmployee,1)).thenReturn(persistedEmployee);
-        assertEquals(employeeController.updateEmployee(testEmployee, 1), persistedEmployee);
+        when(employeeService.update(testEmployee)).thenReturn(persistedEmployee);
+        assertEquals(employeeController.updateEmployee(testEmployee), persistedEmployee);
     }
 
     /**
