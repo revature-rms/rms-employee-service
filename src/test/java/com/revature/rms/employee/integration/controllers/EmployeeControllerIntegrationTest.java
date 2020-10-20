@@ -2,7 +2,6 @@ package com.revature.rms.employee.integration.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.rms.employee.EmployeeServiceApplication;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -37,11 +34,12 @@ public class EmployeeControllerIntegrationTest {
     /**
      * This ensures Employee.getAllEmployees hits the desired endpoint provided, produces a JSON object retrieved from
      * the database, and returns a status of 200 if everything was successful.
+     * Set to Ignore while refactoring ResourceMetaData to the rms-core repository.
      * @throws Exception from perform()
      */
     @Test
     public void testGetAllEmployeesWithExistingEmployeesExpecting200() throws Exception {
-        this.mockMvc.perform(get("/employee/employees").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        this.mockMvc.perform(get("/employees").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 }
