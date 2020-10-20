@@ -7,13 +7,11 @@ public enum Department {
 
     private String departmentName;
 
-    Department(String name) {
-        this.departmentName = name;
-    }
+    Department(String name) {this.departmentName = name;}
 
     public static Department getByName(String name) {
         for (Department department : Department.values()) {
-            if (department.departmentName == name) {
+            if (department.departmentName.equals(name)) {
                 return department;
             }
         }
@@ -21,8 +19,6 @@ public enum Department {
     }
 
     @Override
-    public String toString() {
-        return this.departmentName;
-    }
+    public String toString() {return this.departmentName;}
 
 }

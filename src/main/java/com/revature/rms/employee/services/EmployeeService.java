@@ -1,6 +1,6 @@
 package com.revature.rms.employee.services;
 
-import com.revature.rms.core.metadata.ResourceMetadata;
+import com.revature.rms.core.metadata.*;
 import com.revature.rms.employee.dtos.EmployeeDto;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.core.exceptions.InvalidRequestException;
@@ -9,7 +9,6 @@ import com.revature.rms.employee.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +54,6 @@ public class EmployeeService {
             throw new InvalidRequestException("New employee cannot be null!");
         }
         Employee employee = new Employee(newEmployee);
-
         return employeeRepository.save(employee);
     }
 
@@ -108,7 +106,6 @@ public class EmployeeService {
             throw new ResourceNotFoundException("No employee found with first name: " + name);
         }
         return employee;
-
     }
 
     /**
@@ -123,22 +120,17 @@ public class EmployeeService {
         if(id <= 0){
             throw new InvalidRequestException("ID cannot be less than or equal to zero!");
         }
-
         Iterable<Employee> allEmps = employeeRepository.findAll();
-
         List<Employee> emps = new ArrayList<>();
-
         for(Employee emp : allEmps){
             ResourceMetadata data = emp.getResourceMetadata();
             if(data.getResourceOwner() == id){
                 emps.add(emp);
             }
         }
-
         if(emps.isEmpty()){
             throw new ResourceNotFoundException("No employees found with the owner ID: " + id);
         }
-
         return emps;
 
     }
@@ -167,7 +159,6 @@ public class EmployeeService {
 
     /**
      * delete method: Deletes an employee object based on its id int
-     *
      * @param id employeeId int value
      */
     @Transactional
@@ -180,7 +171,6 @@ public class EmployeeService {
 
     /**
      * Convenience Method
-     *
      * @param iterable
      * @param <T>
      * @return
@@ -191,6 +181,5 @@ public class EmployeeService {
         iterable.forEach(list::add);
         return list;
     }
-
-
+    
 }
