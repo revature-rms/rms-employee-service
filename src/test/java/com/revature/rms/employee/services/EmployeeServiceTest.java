@@ -137,7 +137,7 @@ public class EmployeeServiceTest {
         //Act
         when(employeeRepository.findById(1)).thenReturn(expectedResult);
         when(employeeRepository.save(any())).thenReturn(expectedResult);
-        Employee actualResult = employeeService.update(testEmployeeDto,1);
+        Employee actualResult = employeeService.update(testEmployeeDto);
         //Assert
         assertEquals(expectedResult, actualResult);
     }

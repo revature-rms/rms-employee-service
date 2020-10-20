@@ -60,9 +60,8 @@ public class EmployeeController {
      * @return updated/modified employee object
      */
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee updateEmployee(@RequestBody @Valid EmployeeDto employee,
-                                   @RequestHeader(value = "Authorization") int id) {
-        return employeeService.update(employee, id);
+    public Employee updateEmployee(@RequestBody @Valid EmployeeDto employee) {
+        return employeeService.update(employee);
     }
 
     /**

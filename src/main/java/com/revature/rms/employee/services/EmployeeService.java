@@ -143,14 +143,14 @@ public class EmployeeService {
      * @return updated/modified employee object
      */
     @Transactional
-    public Employee update(EmployeeDto updatedEmp, int id) {
+    public Employee update(EmployeeDto updatedEmp) {
         Employee emp = new Employee(updatedEmp);
         Employee oldEmp = employeeRepository.findById(emp.getId());
         if (oldEmp == null){
             throw new ResourceNotFoundException("No employee exists with ID:" + updatedEmp.getId());
         }
         ResourceMetadata metadata = oldEmp.getResourceMetadata();
-        metadata.setLastModifier(id);
+        metadata.setLastModifier(updatedEmp.getId());
         metadata.setLastModifiedDateTime(LocalDateTime.now().toString());
         emp.setResourceMetadata(metadata);
 
