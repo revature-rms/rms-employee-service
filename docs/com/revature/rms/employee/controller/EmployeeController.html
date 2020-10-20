@@ -150,14 +150,14 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../../../com/revature/rms/employee/entities/Employee.html" title="class in com.revature.rms.employee.entities">Employee</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/revature/rms/employee/controller/EmployeeController.html#addNewEmployee-com.revature.rms.employee.dtos.EmployeeCreds-int-">addNewEmployee</a></span>(@Valid <a href="../../../../../com/revature/rms/employee/dtos/EmployeeCreds.html" title="class in com.revature.rms.employee.dtos">EmployeeCreds</a>&nbsp;employee,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/revature/rms/employee/controller/EmployeeController.html#addNewEmployee-com.revature.rms.employee.dtos.EmployeeDto-int-">addNewEmployee</a></span>(@Valid <a href="../../../../../com/revature/rms/employee/dtos/EmployeeCreds.html" title="class in com.revature.rms.employee.dtos">EmployeeCreds</a>&nbsp;employee,
               int&nbsp;id)</code>
 <div class="block">addEmployee method: Takes in a employee object as the input.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../com/revature/rms/employee/entities/Employee.html" title="class in com.revature.rms.employee.entities">Employee</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/revature/rms/employee/controller/EmployeeController.html#addNewEmployeeWithResource-com.revature.rms.employee.dtos.EmployeeCreds-int-">addNewEmployeeWithResource</a></span>(@Valid <a href="../../../../../com/revature/rms/employee/dtos/EmployeeCreds.html" title="class in com.revature.rms.employee.dtos">EmployeeCreds</a>&nbsp;employee,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/revature/rms/employee/controller/EmployeeController.html#addNewEmployeeWithResource-com.revature.rms.employee.dtos.EmployeeDto-int-">addNewEmployeeWithResource</a></span>(@Valid <a href="../../../../../com/revature/rms/employee/dtos/EmployeeCreds.html" title="class in com.revature.rms.employee.dtos">EmployeeCreds</a>&nbsp;employee,
                           int&nbsp;id)</code>
 <div class="block">addNewEmployeeWithResource method: Takes in a employee object as the input, along with a resourceId.</div>
 </td>
@@ -182,13 +182,13 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../com/revature/rms/employee/entities/Employee.html" title="class in com.revature.rms.employee.entities">Employee</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/revature/rms/employee/controller/EmployeeController.html#getByfirstname-com.revature.rms.employee.dtos.EmployeeCreds-">getByfirstname</a></span>(@Valid <a href="../../../../../com/revature/rms/employee/dtos/EmployeeCreds.html" title="class in com.revature.rms.employee.dtos">EmployeeCreds</a>&nbsp;employee)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/revature/rms/employee/controller/EmployeeController.html#getByfirstname-com.revature.rms.employee.dtos.EmployeeDto-">getByfirstname</a></span>(@Valid <a href="../../../../../com/revature/rms/employee/dtos/EmployeeCreds.html" title="class in com.revature.rms.employee.dtos">EmployeeCreds</a>&nbsp;employee)</code>
 <div class="block">getByfirstname method: Returns an employee object when the firstName String matches a record in the database.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../../com/revature/rms/employee/entities/Employee.html" title="class in com.revature.rms.employee.entities">Employee</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/revature/rms/employee/controller/EmployeeController.html#getByid-com.revature.rms.employee.dtos.EmployeeCreds-">getByid</a></span>(@Valid <a href="../../../../../com/revature/rms/employee/dtos/EmployeeCreds.html" title="class in com.revature.rms.employee.dtos">EmployeeCreds</a>&nbsp;employee)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/revature/rms/employee/controller/EmployeeController.html#getByid-com.revature.rms.employee.dtos.EmployeeDto-">getByid</a></span>(@Valid <a href="../../../../../com/revature/rms/employee/dtos/EmployeeCreds.html" title="class in com.revature.rms.employee.dtos">EmployeeCreds</a>&nbsp;employee)</code>
 <div class="block">getByid method: Returns an employee object when the id int matches a record in the database.</div>
 </td>
 </tr>
@@ -218,7 +218,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../com/revature/rms/employee/entities/Employee.html" title="class in com.revature.rms.employee.entities">Employee</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/revature/rms/employee/controller/EmployeeController.html#updateEmployee-com.revature.rms.employee.dtos.EmployeeCreds-int-">updateEmployee</a></span>(@Valid <a href="../../../../../com/revature/rms/employee/dtos/EmployeeCreds.html" title="class in com.revature.rms.employee.dtos">EmployeeCreds</a>&nbsp;employee,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/revature/rms/employee/controller/EmployeeController.html#updateEmployee-com.revature.rms.employee.dtos.EmployeeDto-int-">updateEmployee</a></span>(@Valid <a href="../../../../../com/revature/rms/employee/dtos/EmployeeCreds.html" title="class in com.revature.rms.employee.dtos">EmployeeCreds</a>&nbsp;employee,
               int&nbsp;id)</code>
 <div class="block">update method: The employee object is inputted and changes are saved.</div>
 </td>
@@ -318,7 +318,7 @@ public&nbsp;<a href="../../../../../com/revature/rms/employee/entities/Employee.
 <div class="block">addNewEmployeeWithResource method: Takes in a employee object as the input, along with a resourceId.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>employee</code> - employeeCreds DTO object</dd>
+<dd><code>employee</code> - employeeDto DTO object</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the newly added employee object</dd>
 </dl>
@@ -401,7 +401,7 @@ public&nbsp;<a href="../../../../../com/revature/rms/employee/entities/Employee.
 <div class="block">getByid method: Returns an employee object when the id int matches a record in the database.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>employee</code> - employeeCreds DTO object</dd>
+<dd><code>employee</code> - employeeDto DTO object</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an employee with matching id</dd>
 </dl>
@@ -421,7 +421,7 @@ public&nbsp;<a href="../../../../../com/revature/rms/employee/entities/Employee.
 <div class="block">getByfirstname method: Returns an employee object when the firstName String matches a record in the database.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>employee</code> - employeeCreds DTO object</dd>
+<dd><code>employee</code> - employeeDto DTO object</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an employee with matching firstName</dd>
 </dl>

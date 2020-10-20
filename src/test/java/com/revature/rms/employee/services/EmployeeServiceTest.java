@@ -1,27 +1,24 @@
 package com.revature.rms.employee.services;
 
-import com.revature.rms.employee.dtos.EmployeeCreds;
+import com.revature.rms.employee.dtos.EmployeeDto;
 import com.revature.rms.employee.entities.Department;
 import com.revature.rms.employee.entities.Employee;
-import com.revature.rms.employee.entities.ResourceMetadata;
+import com.revature.rms.core.metadata.ResourceMetadata;
+import com.revature.rms.core.exceptions.InvalidRequestException;
+import com.revature.rms.core.exceptions.ResourceNotFoundException;
 import com.revature.rms.employee.repositories.EmployeeRepository;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.autoconfigure.ldap.embedded.EmbeddedLdapAutoConfiguration;
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -32,6 +29,7 @@ public class EmployeeServiceTest {
     Department department;
     @InjectMocks
     EmployeeService employeeService;
+
 
     /**
      * testGetAll() ensures EmployeeService().getAll() returns a list of all the existing Employee objects.
@@ -46,7 +44,7 @@ public class EmployeeServiceTest {
         //Act
         when(employeeRepository.findAll()).thenReturn(mockEmployeeList);
         //Assert
-        assertEquals(mockEmployeeList, employeeService.getall());
+        assertEquals(mockEmployeeList, employeeService.findAll());
     }
 
     /**
@@ -60,27 +58,49 @@ public class EmployeeServiceTest {
                 department, new ResourceMetadata());
         //Act
         when(employeeRepository.findById(1)).thenReturn(expectedEmployee);
-        Employee actualEmployee = employeeService.getEmployeeById(1);
+        Employee actualEmployee = employeeService.findById(1);
         //Assert
         assertEquals(actualEmployee, expectedEmployee);
     }
 
     /**
+     * tests findEmployeeByOwnerId to see if it throws a BadRequestException if given an invalid id number
+     */
+    @Test(expected = InvalidRequestException.class)
+    public void testFindEmployeeByOwnerIdBad(){
+        employeeService.findByOwnerId(0);
+    }
+
+    /**
+     * tests resourceNotFoundException by giving one employee with a resourceMetaData different than the owner id put into employeeService.findEmployeeByOwnerId
+     */
+    @Test(expected = ResourceNotFoundException.class)
+    public void testFindEmployeeByOwnerIdNotFound(){
+        Employee differentEmployee = new Employee("Steven", "Kelsey",
+                "steven.kelsey@revature.com", "Manager of Technology",
+                department, new ResourceMetadata(1, "test", 1, "test", 1, true));
+        List<Employee> employees = new ArrayList<>();
+        employees.add(differentEmployee);
+        when(employeeRepository.findAll()).thenReturn(employees);
+        employeeService.findByOwnerId(2);
+    }
+    /**
      * testGetEmployeeByOwnerId EmployeeService().findEmployeeByOwnerId() returns an existing Employee object.
      */
     @Test
-    @Ignore
-    //TODO: fix ResourceNotFoundException
     public void testGetEmployeeByOwnerId() {
         //Arrange
         Employee expectedEmployee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
-                department, new ResourceMetadata());
+                department, new ResourceMetadata(1, "test", 1, "test", 1, true));
         //Act
-        when(employeeRepository.findById(1)).thenReturn(expectedEmployee);
-        Employee actualEmployee = (Employee) employeeService.findEmployeeByOwnerId(1);
+        List<Employee> expectedEmployees = new ArrayList<>();
+        expectedEmployees.add(expectedEmployee);
+
+        when(employeeRepository.findAll()).thenReturn(expectedEmployees);
+        List<Employee> actualEmployees = employeeService.findByOwnerId(1);
         //Assert
-        assertEquals(actualEmployee, expectedEmployee);
+        assertEquals(expectedEmployees, actualEmployees);
     }
 
     /**
@@ -105,19 +125,19 @@ public class EmployeeServiceTest {
      * object already exists.
      */
     @Test
-    @Ignore
-    //TODO: NullPointerException issue due to EmployeeCreds to Employee conversion
     public void testUpdateWithValidEmployee() {
         //Arrange
-        EmployeeCreds testEmployee = new EmployeeCreds(1,"Steven", "Kelsey",
+        EmployeeDto testEmployeeDto = new EmployeeDto(1,"Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
-                department);
-        EmployeeCreds expectedResult = new EmployeeCreds(1,"Steven", "Kelsey",
+                Department.HR);
+        Employee expectedResult = new Employee(1,"Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
-                department);
+                Department.HR, new ResourceMetadata(1, "test", 1, "test", 1, true));
+        Employee testEmployee = new Employee(testEmployeeDto);
         //Act
-
-        Employee actualResult = employeeService.update(testEmployee, 1);
+        when(employeeRepository.findById(1)).thenReturn(expectedResult);
+        when(employeeRepository.save(any())).thenReturn(expectedResult);
+        Employee actualResult = employeeService.update(testEmployeeDto,1);
         //Assert
         assertEquals(expectedResult, actualResult);
     }
@@ -127,21 +147,37 @@ public class EmployeeServiceTest {
      * A non-null building object should be returned.
      */
     @Test
-    @Ignore
-    //TODO: NullPointerException issue due to EmployeeCreds to Employee conversion
     public void testAddEmployeeWithValidEmployee() {
         //Arrange
-        EmployeeCreds testEmployee = new EmployeeCreds("Steven", "Kelsey",
+        EmployeeDto testEmployee = new EmployeeDto("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
         Employee expectedResult = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
         //Act
+
         when(employeeRepository.save(Mockito.any())).thenReturn(expectedResult);
-        Employee actualResult = employeeService.update(testEmployee, 1);
+        Employee actualResult = employeeService.save(testEmployee, 1);
         //Assert
         assertEquals(expectedResult, actualResult);
+    }
+
+    /**
+     * tests for invalid id number in delete throws a InvalidRequestException
+     */
+    @Test(expected = InvalidRequestException.class)
+    public void testDeleteInvalid() {
+        employeeService.delete(0);
+    }
+
+    /**
+     * tests for a no error delete method
+     */
+
+    @Test
+    public void testDelete(){
+        employeeService.delete(1);
     }
 
 }

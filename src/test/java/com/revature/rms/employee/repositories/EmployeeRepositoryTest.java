@@ -1,9 +1,8 @@
 package com.revature.rms.employee.repositories;
 
-import com.revature.rms.employee.dtos.EmployeeCreds;
+import com.revature.rms.employee.dtos.EmployeeDto;
 import com.revature.rms.employee.entities.Department;
 import com.revature.rms.employee.entities.Employee;
-import com.revature.rms.employee.entities.ResourceMetadata;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +12,6 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -27,10 +24,10 @@ public class EmployeeRepositoryTest {
     private Department department;
     @BeforeEach
     public void setup() throws Exception {
-        EmployeeCreds employee1 = new EmployeeCreds("Test", "Tester",
+        EmployeeDto employee1 = new EmployeeDto("Test", "Tester",
                 "test.tester@revature.com","Manager of Technology",
                 department);
-        EmployeeCreds employee2 = new EmployeeCreds("Test2", "Tester2",
+        EmployeeDto employee2 = new EmployeeDto("Test2", "Tester2",
                 "test2.tester2@revature.com","Lead Trainer",
                 department);
     }

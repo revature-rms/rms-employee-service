@@ -1,25 +1,14 @@
 package com.revature.rms.employee.entities;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.revature.rms.employee.dtos.EmployeeCreds;
+import com.revature.rms.core.metadata.*;
+import com.revature.rms.employee.dtos.EmployeeDto;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.io.Serializable;
 
 
 @Entity
-public class Employee {
-
-    @Id
-    @Column
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-
-    private int id;
+public class Employee extends Resource{
 
     @Column(nullable=false)
     private String firstName;
@@ -30,21 +19,14 @@ public class Employee {
     @Column(nullable=false,unique=true)
     private String email;
 
-
     @Column(nullable=false)
     private String title;
 
     @Enumerated(EnumType.STRING)
     private Department department;
 
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private ResourceMetadata resourceMetadata;
-
-
-    public Employee() {super();
+    public Employee() {
+        super();
     }
 
     public Employee(String firstName) {
@@ -70,7 +52,7 @@ public class Employee {
         this.lastName = lastName;
         this.email = email;
         this.title = title;
-        this.resourceMetadata = resourceMetadata;
+        this.setResourceMetadata(resourceMetadata);
     }
 
     public Employee(String firstName, String lastName, String email, String title, Department department, ResourceMetadata resourceMetadata) {
@@ -79,7 +61,7 @@ public class Employee {
         this.email = email;
         this.title = title;
         this.department = department;
-        this.resourceMetadata = resourceMetadata;
+        this.setResourceMetadata(resourceMetadata);
     }
 
     public Employee(int id, String firstName, String lastName, String email, String title, Department department, ResourceMetadata resourceMetadata) {
@@ -89,16 +71,16 @@ public class Employee {
         this.email = email;
         this.title = title;
         this.department = department;
-        this.resourceMetadata = resourceMetadata;
+        this.setResourceMetadata(resourceMetadata);
     }
 
-    public Employee(EmployeeCreds employeeCreds) {
-        this.id = employeeCreds.getId();
-        this.firstName = employeeCreds.getFirstName();
-        this.lastName = employeeCreds.getLastName();
-        this.email = employeeCreds.getEmail();
-        this.title = employeeCreds.getTitle();
-        this.department = employeeCreds.getDepartment();
+    public Employee(EmployeeDto employeeDto) {
+        this.id = employeeDto.getId();
+        this.firstName = employeeDto.getFirstName();
+        this.lastName = employeeDto.getLastName();
+        this.email = employeeDto.getEmail();
+        this.title = employeeDto.getTitle();
+        this.department = employeeDto.getDepartment();
     }
 
     public int getId() {
@@ -149,10 +131,12 @@ public class Employee {
         this.department = department;
     }
 
+    @Override
     public ResourceMetadata getResourceMetadata() {
         return resourceMetadata;
     }
 
+    @Override
     public void setResourceMetadata(ResourceMetadata resourceMetadata) {
         this.resourceMetadata = resourceMetadata;
     }
@@ -168,12 +152,12 @@ public class Employee {
                 Objects.equals(email, employee.email) &&
                 Objects.equals(title, employee.title) &&
                 department == employee.department &&
-                Objects.equals(resourceMetadata, employee.resourceMetadata);
+                Objects.equals(this.getResourceMetadata(), employee.getResourceMetadata());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, title, department, resourceMetadata);
+        return Objects.hash(id, firstName, lastName, email, title, department, this.getResourceMetadata());
     }
 
     @Override
@@ -185,7 +169,7 @@ public class Employee {
                 ", email='" + email + '\'' +
                 ", title='" + title + '\'' +
                 ", department=" + department +
-                ", resourceMetadata=" + resourceMetadata +
+                ", resourceMetadata=" + this.getResourceMetadata() +
                 '}';
     }
 }
