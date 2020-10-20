@@ -103,7 +103,7 @@ public class EmployeeControllerTest {
     public void testGetEmployeeByValidFirstName() {
         EmployeeDto testEmployee = new EmployeeDto("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
-                department);
+                "HR");
         Employee expectedResult = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
@@ -146,7 +146,7 @@ public class EmployeeControllerTest {
     public void testAddNewEmployeeWithValidEmployee() {
         EmployeeDto testEmployee = new EmployeeDto("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
-                department);
+                "HR");
         Employee persistedEmployee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
@@ -161,7 +161,7 @@ public class EmployeeControllerTest {
     public void testAddNewEmployeeWithResourcesWithValidEmployee() {
         EmployeeDto testEmployee = new EmployeeDto("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
-                department);
+                "HR");
         Employee persistedEmployee = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);
