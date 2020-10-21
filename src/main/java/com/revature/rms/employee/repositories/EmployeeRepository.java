@@ -24,4 +24,12 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer>{
      */
     Employee findByFirstName(String firstName);
 
+    /**
+     * findByEmail method: The email parameter is passed as the input
+     * An employee is returned when the input email matches a database record
+     * @param email
+     * @return
+     */
+    Employee findByEmail(String email);
+
 }

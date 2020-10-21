@@ -16,6 +16,7 @@ import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Uses the EmployeeRepository
@@ -61,14 +62,15 @@ public class EmployeeService {
         ResourceMetadata resourceMetadata = new ResourceMetadata(id, LocalDateTime.now().toString(),
                 id, LocalDateTime.now().toString(), id, true);
         employee.setResourceMetadata(resourceMetadata);
-
+        Optional<Employee> emailTest = Optional.empty();
         try{
-            employeeRepository.save(employee);
-        } catch (ConstraintViolationException cve){
-            cve.printStackTrace();
+             emailTest = Optional.of(employeeRepository.findByEmail(employee.getEmail()));
+        } catch (NullPointerException ignored){
+        }
+        if (emailTest.isPresent()){
             throw new ResourcePersistenceException("Email is already taken!");
         }
-        return employee;
+           return employeeRepository.save(employee);
     }
 
     /**

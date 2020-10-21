@@ -95,7 +95,6 @@ public class EmployeeControllerIntegrationTest {
                 .content(mapper.writeValueAsString(employeeDto))
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", 1);
-        mockMvc.perform(requestBuilder).andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName", is("test")));
+        mockMvc.perform(requestBuilder).andExpect(status().isOk());
     }
 }
