@@ -202,13 +202,6 @@
 			<version>2.8.0</version>
 		</dependency>
 
-		<!--		&lt;!&ndash; JaCoCo extension &ndash;&gt;-->
-
-<!--		<dependency>-->
-<!--			<groupId>org.jacoco</groupId>-->
-<!--			<artifactId>jacoco-maven-plugin</artifactId>-->
-<!--			<version>0.8.2</version>-->
-<!--		</dependency>-->
 
 	</dependencies>
 

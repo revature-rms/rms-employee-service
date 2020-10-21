@@ -129,7 +129,7 @@ public class EmployeeServiceTest {
         //Arrange
         EmployeeDto testEmployeeDto = new EmployeeDto(1,"Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
-                Department.HR);
+                "HR");
         Employee expectedResult = new Employee(1,"Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 Department.HR, new ResourceMetadata(1, "test", 1, "test", 1, true));
@@ -137,7 +137,7 @@ public class EmployeeServiceTest {
         //Act
         when(employeeRepository.findById(1)).thenReturn(expectedResult);
         when(employeeRepository.save(any())).thenReturn(expectedResult);
-        Employee actualResult = employeeService.update(testEmployeeDto,1);
+        Employee actualResult = employeeService.update(testEmployeeDto);
         //Assert
         assertEquals(expectedResult, actualResult);
     }
@@ -151,7 +151,7 @@ public class EmployeeServiceTest {
         //Arrange
         EmployeeDto testEmployee = new EmployeeDto("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
-                department);
+                "HR");
         Employee expectedResult = new Employee("Steven", "Kelsey",
                 "steven.kelsey@revature.com", "Manager of Technology",
                 department);

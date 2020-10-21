@@ -1,7 +1,9 @@
 package com.revature.rms.employee.services;
 
-import com.revature.rms.core.metadata.ResourceMetadata;
+import com.revature.rms.core.exceptions.ResourcePersistenceException;
+import com.revature.rms.core.metadata.*;
 import com.revature.rms.employee.dtos.EmployeeDto;
+import com.revature.rms.employee.entities.Department;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.core.exceptions.InvalidRequestException;
 import com.revature.rms.core.exceptions.ResourceNotFoundException;
@@ -10,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Uses the EmployeeRepository
@@ -55,8 +59,18 @@ public class EmployeeService {
             throw new InvalidRequestException("New employee cannot be null!");
         }
         Employee employee = new Employee(newEmployee);
-
-        return employeeRepository.save(employee);
+        ResourceMetadata resourceMetadata = new ResourceMetadata(id, LocalDateTime.now().toString(),
+                id, LocalDateTime.now().toString(), id, true);
+        employee.setResourceMetadata(resourceMetadata);
+        Optional<Employee> emailTest = Optional.empty();
+        try{
+             emailTest = Optional.of(employeeRepository.findByEmail(employee.getEmail()));
+        } catch (NullPointerException ignored){
+        }
+        if (emailTest.isPresent()){
+            throw new ResourcePersistenceException("Email is already taken!");
+        }
+           return employeeRepository.save(employee);
     }
 
     /**
@@ -108,7 +122,6 @@ public class EmployeeService {
             throw new ResourceNotFoundException("No employee found with first name: " + name);
         }
         return employee;
-
     }
 
     /**
@@ -123,22 +136,17 @@ public class EmployeeService {
         if(id <= 0){
             throw new InvalidRequestException("ID cannot be less than or equal to zero!");
         }
-
         Iterable<Employee> allEmps = employeeRepository.findAll();
-
         List<Employee> emps = new ArrayList<>();
-
         for(Employee emp : allEmps){
             ResourceMetadata data = emp.getResourceMetadata();
             if(data.getResourceOwner() == id){
                 emps.add(emp);
             }
         }
-
         if(emps.isEmpty()){
             throw new ResourceNotFoundException("No employees found with the owner ID: " + id);
         }
-
         return emps;
 
     }
@@ -150,24 +158,40 @@ public class EmployeeService {
      * @param updatedEmp newly updated employee object
      * @return updated/modified employee object
      */
+    // TODO modularize this method. Have different update methods for updating different fields that
+    // correspond to different endpoints in the controller.
     @Transactional
-    public Employee update(EmployeeDto updatedEmp, int id) {
+    public Employee update(EmployeeDto updatedEmp) {
         Employee emp = new Employee(updatedEmp);
         Employee oldEmp = employeeRepository.findById(emp.getId());
         if (oldEmp == null){
             throw new ResourceNotFoundException("No employee exists with ID:" + updatedEmp.getId());
         }
         ResourceMetadata metadata = oldEmp.getResourceMetadata();
-        metadata.setLastModifier(id);
+        metadata.setLastModifier(updatedEmp.getId());
         metadata.setLastModifiedDateTime(LocalDateTime.now().toString());
         emp.setResourceMetadata(metadata);
+
+        emp.setId(updatedEmp.getId());
+        emp.setFirstName(updatedEmp.getFirstName());
+        emp.setLastName(updatedEmp.getLastName());
+        emp.setEmail(updatedEmp.getEmail());
+        emp.setTitle(updatedEmp.getTitle());
+        emp.setDepartment(Department.getByName(updatedEmp.getDepartment()));
+
+        emp.getResourceMetadata().setLastModifiedDateTime(LocalDateTime.now().toString());
+        emp.getResourceMetadata().setResourceCreator(oldEmp.getResourceMetadata().getResourceCreator());
+        emp.getResourceMetadata().setResourceCreationDateTime(oldEmp.getResourceMetadata().getResourceCreationDateTime());
+        emp.getResourceMetadata().setLastModifier(oldEmp.getResourceMetadata().getLastModifier());
+        emp.getResourceMetadata().setResourceOwner(oldEmp.getResourceMetadata().getResourceOwner());
+        emp.getResourceMetadata().setCurrentlyActive(oldEmp.getResourceMetadata().isCurrentlyActive());
+
 
         return employeeRepository.save(emp);
     }
 
     /**
      * delete method: Deletes an employee object based on its id int
-     *
      * @param id employeeId int value
      */
     @Transactional
@@ -180,7 +204,6 @@ public class EmployeeService {
 
     /**
      * Convenience Method
-     *
      * @param iterable
      * @param <T>
      * @return
@@ -191,6 +214,5 @@ public class EmployeeService {
         iterable.forEach(list::add);
         return list;
     }
-
 
 }

@@ -26,30 +26,10 @@ public class EmployeeRepositoryTest {
     public void setup() throws Exception {
         EmployeeDto employee1 = new EmployeeDto("Test", "Tester",
                 "test.tester@revature.com","Manager of Technology",
-                department);
+                "HR");
         EmployeeDto employee2 = new EmployeeDto("Test2", "Tester2",
                 "test2.tester2@revature.com","Lead Trainer",
-                department);
+                "HR");
     }
 
-    @Test
-    @Ignore
-    public void testAddEmployee() {
-        Employee employee = new Employee("Test", "Tester",
-                "test.tester@revature.com","Manager of Technology",
-                department);
-        employee = entityManager.persistAndFlush(employee);
-    }
-
-    @Test
-    @Ignore
-    //TODO: find out how to properly mock the ID for employees for testing.
-    public void testFindAll() {
-        Iterable<Employee> employees = employeeRepository.findAll();
-        int count = 0;
-        for (Employee e : employees) {
-            count++;
-        }
-        assertEquals(22, count);
-    }
 }
