@@ -32,24 +32,4 @@ public class EmployeeRepositoryTest {
                 "HR");
     }
 
-    @Test
-    @Ignore
-    public void testAddEmployee() {
-        Employee employee = new Employee("Test", "Tester",
-                "test.tester@revature.com","Manager of Technology",
-                department);
-        employee = entityManager.persistAndFlush(employee);
-    }
-
-    @Test
-    @Ignore
-    //TODO: find out how to properly mock the ID for employees for testing.
-    public void testFindAll() {
-        Iterable<Employee> employees = employeeRepository.findAll();
-        int count = 0;
-        for (Employee e : employees) {
-            count++;
-        }
-        assertEquals(22, count);
-    }
 }
