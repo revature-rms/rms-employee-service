@@ -1,5 +1,6 @@
 package com.revature.rms.employee.services;
 
+import com.revature.rms.core.exceptions.ResourcePersistenceException;
 import com.revature.rms.core.metadata.*;
 import com.revature.rms.employee.dtos.EmployeeDto;
 import com.revature.rms.employee.entities.Department;
@@ -10,9 +11,12 @@ import com.revature.rms.employee.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Uses the EmployeeRepository
@@ -55,7 +59,18 @@ public class EmployeeService {
             throw new InvalidRequestException("New employee cannot be null!");
         }
         Employee employee = new Employee(newEmployee);
-        return employeeRepository.save(employee);
+        ResourceMetadata resourceMetadata = new ResourceMetadata(id, LocalDateTime.now().toString(),
+                id, LocalDateTime.now().toString(), id, true);
+        employee.setResourceMetadata(resourceMetadata);
+        Optional<Employee> emailTest = Optional.empty();
+        try{
+             emailTest = Optional.of(employeeRepository.findByEmail(employee.getEmail()));
+        } catch (NullPointerException ignored){
+        }
+        if (emailTest.isPresent()){
+            throw new ResourcePersistenceException("Email is already taken!");
+        }
+           return employeeRepository.save(employee);
     }
 
     /**
@@ -199,5 +214,5 @@ public class EmployeeService {
         iterable.forEach(list::add);
         return list;
     }
-    
+
 }
