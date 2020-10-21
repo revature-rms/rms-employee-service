@@ -25,13 +25,10 @@ public class Employee extends Resource{
     @Enumerated(EnumType.STRING)
     private Department department;
 
-    public Employee() {
-        super();
-    }
+    public Employee() {super();}
 
-    public Employee(String firstName) {
-        this.firstName = firstName;
-    }
+    public Employee(String firstName) {this.firstName = firstName;}
+
     public Employee(String firstName, String lastName, String email, String title) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -80,61 +77,35 @@ public class Employee extends Resource{
         this.lastName = employeeDto.getLastName();
         this.email = employeeDto.getEmail();
         this.title = employeeDto.getTitle();
-        this.department = employeeDto.getDepartment();
+        this.department = Department.getByName(employeeDto.getDepartment());
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() {return id;}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) {this.id = id;}
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getFirstName() {return firstName;}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    public void setFirstName(String firstName) {this.firstName = firstName;}
 
-    public String getLastName() {
-        return lastName;
-    }
+    public String getLastName() {return lastName;}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    public void setLastName(String lastName) {this.lastName = lastName;}
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() {return email;}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public void setEmail(String email) {this.email = email;}
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() {return title;}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) {this.title = title;}
 
-    public Department getDepartment() {
-        return department;
-    }
+    public Department getDepartment() {return department;}
 
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
+    public void setDepartment(Department department) {this.department = department;}
 
     @Override
-    public ResourceMetadata getResourceMetadata() {
-        return resourceMetadata;
-    }
+    public ResourceMetadata getResourceMetadata() {return resourceMetadata;}
 
     @Override
     public void setResourceMetadata(ResourceMetadata resourceMetadata) {

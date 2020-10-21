@@ -3,14 +3,15 @@ package com.revature.rms.employee.dtos;
 import com.revature.rms.employee.entities.Department;
 
 public class EmployeeDto {
+
     private int id;
     private String firstName;
     private String lastName;
     private String email;
     private String title;
-    private Department department;
+    private String department;
 
-    public EmployeeDto(int id, String firstName, String lastName, String email, String title, Department department) {
+    public EmployeeDto(int id, String firstName, String lastName, String email, String title, String department) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -19,10 +20,9 @@ public class EmployeeDto {
         this.department = department;
     }
 
-    public EmployeeDto() {super();
-    }
+    public EmployeeDto() {super();}
 
-    public EmployeeDto(String firstName, String lastName, String email, String title, Department department) {
+    public EmployeeDto(String firstName, String lastName, String email, String title, String department) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -70,11 +70,11 @@ public class EmployeeDto {
         this.title = title;
     }
 
-    public Department getDepartment() {
+    public String getDepartment() {
         return department;
     }
 
-    public void setDepartment(Department department) {
+    public void setDepartment(String department) {
         this.department = department;
     }
 
