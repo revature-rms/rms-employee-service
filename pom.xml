@@ -42,6 +42,11 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>github</id>
+			<name>GitHub revature-rms Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/revature-rms/rms-core</url>
+		</repository>
 	</repositories>
 
 	<build>

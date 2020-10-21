@@ -77,7 +77,7 @@ public class Employee extends Resource{
         this.lastName = employeeDto.getLastName();
         this.email = employeeDto.getEmail();
         this.title = employeeDto.getTitle();
-        this.department = employeeDto.getDepartment();
+        this.department = Department.getByName(employeeDto.getDepartment());
     }
 
     public int getId() {return id;}

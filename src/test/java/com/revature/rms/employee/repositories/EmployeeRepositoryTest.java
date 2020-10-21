@@ -26,10 +26,10 @@ public class EmployeeRepositoryTest {
     public void setup() throws Exception {
         EmployeeDto employee1 = new EmployeeDto("Test", "Tester",
                 "test.tester@revature.com","Manager of Technology",
-                department);
+                "HR");
         EmployeeDto employee2 = new EmployeeDto("Test2", "Tester2",
                 "test2.tester2@revature.com","Lead Trainer",
-                department);
+                "HR");
     }
 
     @Test
