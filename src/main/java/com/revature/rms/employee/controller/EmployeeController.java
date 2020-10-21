@@ -86,7 +86,7 @@ public class EmployeeController {
     @DeleteMapping(value = "/{id}")
     public void deleteEmployeeById(@PathVariable int id) {
         if (id <= 0) {
-            throw new InvalidRequestException();
+            throw new InvalidRequestException("id may not be below 1");
         }
         employeeService.delete(id);
     }
