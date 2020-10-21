@@ -3,6 +3,7 @@ package com.revature.rms.employee.services;
 import com.revature.rms.core.exceptions.ResourcePersistenceException;
 import com.revature.rms.core.metadata.*;
 import com.revature.rms.employee.dtos.EmployeeDto;
+import com.revature.rms.employee.entities.Department;
 import com.revature.rms.employee.entities.Employee;
 import com.revature.rms.core.exceptions.InvalidRequestException;
 import com.revature.rms.core.exceptions.ResourceNotFoundException;
@@ -155,6 +156,8 @@ public class EmployeeService {
      * @param updatedEmp newly updated employee object
      * @return updated/modified employee object
      */
+    // TODO modularize this method. Have different update methods for updating different fields that
+    // correspond to different endpoints in the controller.
     @Transactional
     public Employee update(EmployeeDto updatedEmp) {
         Employee emp = new Employee(updatedEmp);
@@ -166,6 +169,21 @@ public class EmployeeService {
         metadata.setLastModifier(updatedEmp.getId());
         metadata.setLastModifiedDateTime(LocalDateTime.now().toString());
         emp.setResourceMetadata(metadata);
+
+        emp.setId(updatedEmp.getId());
+        emp.setFirstName(updatedEmp.getFirstName());
+        emp.setLastName(updatedEmp.getLastName());
+        emp.setEmail(updatedEmp.getEmail());
+        emp.setTitle(updatedEmp.getTitle());
+        emp.setDepartment(Department.getByName(updatedEmp.getDepartment()));
+
+        emp.getResourceMetadata().setLastModifiedDateTime(LocalDateTime.now().toString());
+        emp.getResourceMetadata().setResourceCreator(oldEmp.getResourceMetadata().getResourceCreator());
+        emp.getResourceMetadata().setResourceCreationDateTime(oldEmp.getResourceMetadata().getResourceCreationDateTime());
+        emp.getResourceMetadata().setLastModifier(oldEmp.getResourceMetadata().getLastModifier());
+        emp.getResourceMetadata().setResourceOwner(oldEmp.getResourceMetadata().getResourceOwner());
+        emp.getResourceMetadata().setCurrentlyActive(oldEmp.getResourceMetadata().isCurrentlyActive());
+
 
         return employeeRepository.save(emp);
     }
